@@ -1222,21 +1222,20 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
     
     cartItems = cartItems.filter(item => item.quantity > 0);
 
-    cartItems.forEach(item => {
-        if (item.quantity > 0) {
-            updatedTotalPrice += item.price * item.quantity;
-            const cartItemElement = document.createElement("div");
-            cartItemElement.classList.add("cart-item");
-            cartItemElement.innerHTML = `
-                <h3>${item.name}</h3>
-                <p class="quantity">Quantity: ${item.quantity}</p>
-                <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
-                <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
-            `;
-            cartItemsContainer.appendChild(cartItemElement);
-        }
+     cartItems.forEach(item => {
+      if (item.quantity > 0 && !isNaN(item.price)) {
+        updatedTotalPrice += item.price * item.quantity;
+        const cartItemElement = document.createElement("div");
+        cartItemElement.classList.add("cart-item");
+        cartItemElement.innerHTML = `
+          <h3>${item.name}</h3>
+          <p class="quantity">Quantity: ${item.quantity}</p>
+          <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
+          <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+      }
     });
-
   
     document.getElementById("total-price").innerText = updatedTotalPrice.toFixed(2);
   
@@ -1292,6 +1291,10 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
       document.getElementById('product-detail-' + i).style.display = 'none';
     }
     window.scrollTo(0, 0);
+  }
+    function updateTotalPrice() {
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    document.getElementById('total-price').innerText = total.toFixed(2);
   }
   
   </script>
