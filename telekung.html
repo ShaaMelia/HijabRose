@@ -1220,27 +1220,28 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
   
     cartItemsContainer.innerHTML = "";
   
-    cartItems = cartItems.filter(item => item.quantity > 0);
-  
+
     cartItems.forEach(item => {
-      if (item.quantity > 0 && !isNaN(item.price)) {
-        updatedTotalPrice += item.price * item.quantity;
-        const cartItemElement = document.createElement("div");
-        cartItemElement.classList.add("cart-item");
-        cartItemElement.innerHTML = `
-          <h3>${item.name}</h3>
-          <p class="quantity">Quantity: ${item.quantity}</p>
-          <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
-          <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
-        `;
-        cartItemsContainer.appendChild(cartItemElement);
-      }
+        if (item.quantity > 0) {
+            updatedTotalPrice += item.price * item.quantity;
+            const cartItemElement = document.createElement("div");
+            cartItemElement.classList.add("cart-item");
+            cartItemElement.innerHTML = `
+                <h3>${item.name}</h3>
+                <p class="quantity">Quantity: ${item.quantity}</p>
+                <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
+                <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
+            `;
+            cartItemsContainer.appendChild(cartItemElement);
+        }
     });
+
   
     document.getElementById("total-price").innerText = updatedTotalPrice.toFixed(2);
   
     cartModal.style.display = "flex";
     cartOverlay.style.display = "block";
+    localStorage.setItem('totalPrice', updatedTotalPrice.toFixed(2));
   }
   
   function closeCartModal() {
@@ -1251,12 +1252,20 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
   function updateCart() {
     document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  
-    if (document.getElementById("cart-modal").style.display === "flex") {
-      openCartModal();
-    }
   }
   
+  function addToCart(productName, productPrice) {
+    const itemIndex = cartItems.findIndex(item => item.name === productName);
+
+    if (itemIndex === -1) {
+        cartItems.push({ name: productName, price: parseFloat(productPrice), quantity: 1 });
+    } else {
+        cartItems[itemIndex].quantity++;
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    updateCart();
+}
   function deductItem(productName) {
     const item = cartItems.find(item => item.name === productName);
     if (item && item.quantity > 1) {
@@ -1268,6 +1277,14 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     updateCart();
   }
+
+  function proceedToCheckout() {
+    // Store cart details in localStorage and navigate to the form page
+    const orderDescription = cartItems.map(item => `${item.name} x${item.quantity} - RM ${(item.price * item.quantity).toFixed(2)}`).join("\n");
+    localStorage.setItem('orderDescription', orderDescription);
+
+    window.location.href = "form.html"; // Redirect to the form page
+}
   
   function showProductDetail(productId) {
     for (let i = 1; i <= 8; i++) {
@@ -1284,10 +1301,6 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
     window.scrollTo(0, 0);
   }
   
-  function updateTotalPrice() {
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    document.getElementById('total-price').innerText = total.toFixed(2);
-  }
   </script>
   </body>
   </html>
