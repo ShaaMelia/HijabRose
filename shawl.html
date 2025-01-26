@@ -2095,16 +2095,17 @@
   }
 
   function showProductDetail(productId) {
+    for (let i = 1; i <= 40; i++) {
+      document.getElementById('product-detail-' + i).style.display = 'none';
+    }
+  
     document.getElementById('product-detail-' + productId).style.display = 'block';
   }
-
+  
   function goBack() {
-    const productDetails = document.querySelectorAll('.product-detail');
-
-    productDetails.forEach(function(productDetail) {
-      productDetail.style.display = 'none';
-    });
-
+    for (let i = 1; i <= 40; i++) {
+      document.getElementById('product-detail-' + i).style.display = 'none';
+    }
     window.scrollTo(0, 0);
   }
 
