@@ -1150,8 +1150,6 @@
 </div>
 </div>
 
-
-
 <script>
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   
@@ -1223,10 +1221,10 @@
     let updatedTotalPrice = 0;
   
     cartItemsContainer.innerHTML = "";
-  
+    
     cartItems = cartItems.filter(item => item.quantity > 0);
-  
-    cartItems.forEach(item => {
+
+     cartItems.forEach(item => {
       if (item.quantity > 0 && !isNaN(item.price)) {
         updatedTotalPrice += item.price * item.quantity;
         const cartItemElement = document.createElement("div");
@@ -1256,8 +1254,8 @@
   function updateCart() {
     document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  
-    if (document.getElementById("cart-modal").style.display === "flex") {
+    
+     if (document.getElementById("cart-modal").style.display === "flex") {
       openCartModal();
     }
   }
@@ -1273,13 +1271,12 @@
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     updateCart();
   }
-  
-    function proceedToCheckout() {
-*    // Store cart details in localStorage and navigate to the form page
+
+  function proceedToCheckout() {
     const orderDescription = cartItems.map(item => `${item.name} x${item.quantity} - RM ${(item.price * item.quantity).toFixed(2)}`).join("\n");
     localStorage.setItem('orderDescription', orderDescription);
 
-    window.location.href = "form.html"; // Redirect to the form page
+    window.location.href = "form.html"; 
 }
   
   function showProductDetail(productId) {
@@ -1296,11 +1293,12 @@
     }
     window.scrollTo(0, 0);
   }
-  
-  function updateTotalPrice() {
+    function updateTotalPrice() {
     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     document.getElementById('total-price').innerText = total.toFixed(2);
   }
+
   </script>
+
   </body>
   </html>
