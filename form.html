@@ -545,11 +545,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById("checkoutForm").addEventListener("submit", function (e) {
         e.preventDefault();
- 
-   alert("Form submitted!"); 
-
-  window.location.href = "Payment.html"; 
-  });
 
         const formData = {
             firstName: document.getElementsByName("firstName")[0].value,
