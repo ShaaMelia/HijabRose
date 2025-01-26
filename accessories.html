@@ -966,9 +966,11 @@
   </div>
 </div>
 
+<!-- Group 2: Next 10 Products -->
 <div id="group-2" class="product-group" style="display: none;">
   <div class="main-content">
     <div class="product-list">
+      <!-- Product Cards for Group 2 -->
       <div class="product-card" onclick="showProductDetail(11)">
         <div class="product-image">
           <img src="inner1.jpg" alt="Product 11" class="first">
@@ -1019,8 +1021,8 @@
 
       <div class="product-card" onclick="showProductDetail(15)">
         <div class="product-image">
-          <img src="inner5.jpg" alt="Product 13" class="first">
-          <img src="inner5b.jpg" alt="Product 13 Second" class="second">
+          <img src="inner5.jpg" alt="Product 15" class="first">
+          <img src="inner5b.jpg" alt="Product 15 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Wisteria Inner Tie Back</h3>
@@ -1028,10 +1030,70 @@
           <p class="product-price">RM 7.99</p>
         </div>
       </div>
+
+      <div class="product-card" onclick="showProductDetail(16)">
+        <div class="product-image">
+          <img src="inner6.jpg" alt="Product 16" class="first">
+          <img src="inner6b.jpg" alt="Product 16 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Tea Rose Inner Ninja</h3>
+          <p>Lightweight, cooling and breathable</p>
+          <p class="product-price">RM 7.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(17)">
+        <div class="product-image">
+          <img src="inner7.jpg" alt="Product 17" class="first">
+          <img src="inner7b.jpg" alt="Product 17 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Black Dahlia Inner Ninja</h3>
+          <p>Lightweight, cooling and breathable</p>
+          <p class="product-price">RM 7.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(18)">
+        <div class="product-image">
+          <img src="inner8.jpg" alt="Product 18" class="first">
+          <img src="inner8b.jpg" alt="Product 18 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Silver Lotus Inner Ninja </h3>
+          <p>Lightweight, cooling and breathable</p>
+          <p class="product-price">RM 7.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(19)">
+        <div class="product-image">
+          <img src="inner9.jpg" alt="Product 19" class="first">
+          <img src="inner9b.jpg" alt="Product 19 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Bluebell Moon Inner Ninja</h3>
+          <p>Lightweight, cooling and breathable</p>
+          <p class="product-price">RM 7.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(20)">
+        <div class="product-image">
+          <img src="inner10.jpg" alt="Product 20" class="first">
+          <img src="inner10bb.jpg" alt="Product 20 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Snowdrop Grace Inner Ninja</h3>
+          <p>Lightweight, cooling and breathable</p>
+          <p class="product-price">RM 7.99</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
+  
 <div class="product-navigation" style="text-align: center; margin-top: 20px;">
   <button onclick="showGroup(1)" style="background-color: #f2f2f2; border: 2px solid #ccc; color: #333; font-size: 16px; padding: 8px 16px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
     1
@@ -1040,6 +1102,7 @@
     2
   </button>
 </div>
+
 
 <div id="product-detail-1" class="product-detail">
   <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
@@ -1264,6 +1327,75 @@
   </div>
 </div>
 
+  <div id="product-detail-16" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Tea Rose Inner Ninja</h2>
+      <p class="product-detail-description">"Soft yet fierce, with a warm, comforting strength that reveals itself with every layer."</p>
+      <div class="product-detail-price">RM 7.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(16, 'Tea Rose Inner Ninja', 7.99)">Add to Cart</button>
+    </div>
+    <img src="inner6.jpg" alt="Product 16" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="inner6bb.jpg" alt="Product 16 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-17" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Black Dahlia Inner Ninja</h2>
+      <p class="product-detail-description">"Classic and bold, perfect for any occasion."</p>
+      <div class="product-detail-price">RM 7.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(17, 'Black Dahlia Inner Ninja', 7.99)">Add to Cart</button>
+    </div>
+    <img src="inner7.jpg" alt="Product 17" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="inner7bb.jpg" alt="Product 17 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-18" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Silver Lotus Inner Ninja</h2>
+      <p class="product-detail-description">"A symbol of resilience and grace, embodying strength through stillness and subtle elegance."</p>
+      <div class="product-detail-price">RM 7.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(18, 'Silver Lotus Inner Ninja', 7.99)">Add to Cart</button>
+    </div>
+    <img src="inner8.jpg" alt="Product 18" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="inner8bb.jpg" alt="Product 18 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-19" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Bluebell Moon Inner Ninja</h2>
+      <p class="product-detail-description">"Mysterious and strong, like the calm night sky—perfect for embracing your inner power."</p>
+      <div class="product-detail-price">RM 7.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(19, 'Bluebell Moon Inner Ninja', 7.99)">Add to Cart</button>
+    </div>
+    <img src="inner9.jpg" alt="Product 19" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="inner9bb.jpg" alt="Product 19 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-20" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Snowdrop Grace Inner Ninja</h2>
+      <p class="product-detail-description">"Pure and unstoppable, like the first bloom breaking through the cold—quiet strength in simplicity."</p>
+      <div class="product-detail-price">RM 7.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(20, 'Snowdrop Grace Inner Ninja', 7.99)">Add to Cart</button>
+    </div>
+    <img src="inner10.jpg" alt="Product 20" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="inner10bb.jpg" alt="Product 20 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
 
 
 <div class="footer" style="background-color: #8e4d61; color: white; bottom: 0; left: 0; width: 100%; padding: 20px 0; display: flex; flex-direction: column; box-sizing: border-box;">
@@ -1461,7 +1593,7 @@
   }
   
   function showProductDetail(productId) {
-    for (let i = 1; i <= 15; i++) {
+    for (let i = 1; i <= 20; i++) {
       document.getElementById('product-detail-' + i).style.display = 'none';
     }
   
@@ -1469,7 +1601,7 @@
   }
   
   function goBack() {
-    for (let i = 1; i <= 15; i++) {
+    for (let i = 1; i <= 20; i++) {
       document.getElementById('product-detail-' + i).style.display = 'none';
     }
     window.scrollTo(0, 0);
