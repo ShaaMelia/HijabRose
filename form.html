@@ -427,8 +427,8 @@ textarea {
         <input type="text" name="city" required>
 
         <label>Order:</label>
-        <textarea name="order" required></textarea>
-
+        <textarea id="orderDetails" name="order" required readonly></textarea>
+        
         <label>Order Total:</label>
         <input type="text" id="orderTotal" name="orderTotal" readonly>
 
@@ -510,12 +510,12 @@ textarea {
 </div>
 
 
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    
     let totalPriceFromStorage = localStorage.getItem('totalPrice');
-
+    
     const orderTextArea = document.querySelector('textarea[name="order"]');
     const orderTotalInput = document.getElementById("orderTotal");
 
@@ -568,7 +568,8 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.removeItem('totalPrice');
 
         document.getElementById("checkoutForm").reset();
-        displayCartDetails(); 
+
+        window.location.href = "Payment.html";  
     });
 });
 
@@ -594,21 +595,6 @@ function addToCart(productId, productName, productPrice) {
     showToast(`${productName} has been added to your cart.`);
 }
 
-function deductItem(productName) {
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    const item = cartItems.find(item => item.name === productName);
-
-    if (item) {
-        item.quantity--;
-        if (item.quantity === 0) {
-            cartItems = cartItems.filter(item => item.name !== productName);
-        }
-    }
-
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    updateTotalPrice();
-}
-
 function updateTotalPrice() {
     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     let total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -624,6 +610,16 @@ function showToast(message) {
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
 }
+
+     const navbar = document.querySelector('.navbar');
+
+  window.onscroll = function() {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  };
 </script>
 </body>
 </html>
