@@ -905,6 +905,13 @@
           <p class="product-price">RM 8.99</p>
         </div>
       </div>
+ </div>
+      </div>
+ </div>
+
+<div id="group-2" class="product-group">
+  <div class="main-content">
+    <div class="product-list" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
 
       <div class="product-card" onclick="showProductDetail(6)" style="flex: 1 1 calc(20% - 20px); margin-bottom: 20px; text-align: center;">
         <div class="product-image">
@@ -965,13 +972,12 @@
           <p class="product-price">RM 8.99</p>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- Group 2: Next 10 Products -->
-<div id="group-2" class="product-group" style="display: none;">
+<!-- Group 3: Next 10 Products -->
+<div id="group-3" class="product-group" style="display: none;">
   <div class="main-content">
     <div class="product-list">
       <!-- Product Cards for Group 2 -->
@@ -1034,7 +1040,15 @@
           <p class="product-price">RM 7.99</p>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
+
+
+<div id="group-4" class="product-group">
+  <div class="main-content">
+    <div class="product-list" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
       <div class="product-card" onclick="showProductDetail(16)">
         <div class="product-image">
           <img src="inner6.jpg" alt="Product 16" class="first">
@@ -1104,6 +1118,12 @@
   </button>
   <button onclick="showGroup(2)" style="background-color: #f2f2f2; border: 2px solid #ccc; color: #333; font-size: 16px; padding: 8px 16px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
     2
+  </button>
+  <button onclick="showGroup(3)" style="background-color: #f2f2f2; border: 2px solid #ccc; color: #333; font-size: 16px; padding: 8px 16px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
+    3
+  </button>
+  <button onclick="showGroup(4)" style="background-color: #f2f2f2; border: 2px solid #ccc; color: #333; font-size: 16px; padding: 8px 16px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
+    4
   </button>
 </div>
 
@@ -1465,16 +1485,23 @@
 <script>
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   
-  function showGroup(groupNumber) {
+   function showGroup(groupNumber) {
     document.getElementById('group-1').style.display = 'none';
     document.getElementById('group-2').style.display = 'none';
-  
-    if (groupNumber === 1) {
-      document.getElementById('group-1').style.display = 'block';
+    document.getElementById('group-3').style.display = 'none';
+    document.getElementById('group-4').style.display = 'none';
+
+       if (groupNumber === 1) {
+        document.getElementById('group-1').style.display = 'block';
     } else if (groupNumber === 2) {
-      document.getElementById('group-2').style.display = 'block';
+        document.getElementById('group-2').style.display = 'block';
+    } else if (groupNumber === 3) {
+        document.getElementById('group-3').style.display = 'block';
+    } else if (groupNumber === 4) {
+        document.getElementById('group-4').style.display = 'block';
     }
-  }
+}
+
   
   const navbar = document.querySelector('.navbar');
   
