@@ -1245,6 +1245,7 @@
   
     cartModal.style.display = "flex";
     cartOverlay.style.display = "block";
+    localStorage.setItem('totalPrice', updatedTotalPrice.toFixed(2));
   }
   
   function closeCartModal() {
@@ -1272,6 +1273,14 @@
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     updateCart();
   }
+  
+    function proceedToCheckout() {
+*    // Store cart details in localStorage and navigate to the form page
+    const orderDescription = cartItems.map(item => `${item.name} x${item.quantity} - RM ${(item.price * item.quantity).toFixed(2)}`).join("\n");
+    localStorage.setItem('orderDescription', orderDescription);
+
+    window.location.href = "form.html"; // Redirect to the form page
+}
   
   function showProductDetail(productId) {
     for (let i = 1; i <= 8; i++) {
