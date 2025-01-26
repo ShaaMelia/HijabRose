@@ -602,8 +602,6 @@ input:focus, textarea:focus {
 
 
 <script>
-
-
 document.addEventListener('DOMContentLoaded', function () {
         const paymentLinks = document.querySelectorAll('.bank-icons a');
         const proceedButton = document.querySelector('.proceed-to-pay button');
@@ -644,16 +642,6 @@ function showGroup(groupNumber) {
 }
 
 
-document.querySelector('.checkout-button').addEventListener('click', () => {
-  if (cartItems.length > 0) {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    window.location.href = 'form.html'; 
-  } else {
-    alert("Your cart is empty!");
-  }
-});
-
-
 function showToast(message) {
   const toast = document.createElement('div');
   toast.className = 'toast';
@@ -663,13 +651,7 @@ function showToast(message) {
 }
 
 
-function addToCart(productId, productName, productPrice) {
-  productPrice = parseFloat(productPrice); 
 
-  if (isNaN(productPrice)) {
-    showToast("Invalid product price!");
-    return;
-  }
 
   const itemIndex = cartItems.findIndex(item => item.name === productName);
 
@@ -688,119 +670,62 @@ function addToCart(productId, productName, productPrice) {
    const navbar = document.querySelector('.navbar');
 
 
-window.onscroll = function() {
-if (window.scrollY > 50) {  
-  navbar.classList.add('scrolled');
-} else {
-  navbar.classList.remove('scrolled');
-}
-};
+document.addEventListener('DOMContentLoaded', function () {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let totalPriceFromStorage = localStorage.getItem('totalPrice');
+    
+    const orderTextArea = document.querySelector('textarea[name="order"]');
+    const orderTotalInput = document.getElementById("orderTotal");
 
+    function displayCartDetails() {
+        let totalPrice = 0;
 
-function openCartModal() {
-  const cartOverlay = document.getElementById("cart-overlay");
-  const cartModal = document.getElementById("cart-modal");
-  const cartItemsContainer = document.getElementById("cart-items");
-  let updatedTotalPrice = 0;
+        if (cartItems.length === 0) {
+            orderTextArea.value = "No items in cart.";
+            orderTotalInput.value = "RM 0.00";
+            return;
+        }
 
-  
-  cartItemsContainer.innerHTML = "";  
+        const orderSummary = cartItems.map(item => {
+            let itemTotal = (item.price * item.quantity).toFixed(2);
+            totalPrice += item.price * item.quantity;
+            return `${item.name} x${item.quantity} - RM ${itemTotal}`;
+        }).join("\n");
 
+        orderTextArea.value = orderSummary;
+        orderTotalInput.value = `RM ${totalPrice.toFixed(2)}`;
 
-  cartItems = cartItems.filter(item => item.quantity > 0);
-
-  
-  cartItems.forEach(item => {
-    if (item.quantity > 0 && !isNaN(item.price)) { 
-      updatedTotalPrice += item.price * item.quantity;
-      const cartItemElement = document.createElement("div");
-      cartItemElement.classList.add("cart-item");
-      cartItemElement.innerHTML = `
-        <h3>${item.name}</h3>
-        <p class="quantity">Quantity: ${item.quantity}</p>
-        <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
-        <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
-      `;
-      cartItemsContainer.appendChild(cartItemElement);
+        localStorage.setItem('orderDescription', orderSummary);
+        localStorage.setItem('totalPrice', totalPrice.toFixed(2));
     }
-  });
 
- 
-  document.getElementById("total-price").innerText = updatedTotalPrice.toFixed(2);
-
-  
-  cartModal.style.display = "flex";
-  cartOverlay.style.display = "block";
-}
-
-
-function closeCartModal() {
-  document.getElementById("cart-modal").style.display = "none";
-  document.getElementById("cart-overlay").style.display = "none";
-}
-
-
-function updateCart() {
- 
-  document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
-
- 
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
-  if (document.getElementById("cart-modal").style.display === "flex") {
-    openCartModal();
-  }
-}
-
-
-function deductItem(productName) {
-  const item = cartItems.find(item => item.name === productName);
-  if (item && item.quantity > 1) {
-    item.quantity--;
-  } else {
-   
-    cartItems = cartItems.filter(item => item.name !== productName);
-  }
-
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  updateCart(); 
-}
-
-
-function showProductDetail(productId) {
-  
-  for (let i = 1; i <= 8; i++) {
-    document.getElementById('product-detail-' + i).style.display = 'none';
-  }
-
- 
-  document.getElementById('product-detail-' + productId).style.display = 'block';
-}
-
-
-function goBack() {
-  
-  for (let i = 1; i <= 8; i++) {
-    document.getElementById('product-detail-' + i).style.display = 'none';
-  }
-  window.scrollTo(0, 0); 
-}
 
 
 function updateTotalPrice() {
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  document.getElementById('total-price').innerText = total.toFixed(2);
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    
+    localStorage.setItem('totalPrice', total.toFixed(2));
+    document.getElementById("orderTotal").value = `RM ${total.toFixed(2)}`;
 }
 
-
-function updateOrderTotalPrice() {
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  localStorage.setItem('totalAmount', total.toFixed(2)); 
-  
- 
-  document.getElementById('order-total').innerText = `RM ${total.toFixed(2)}`;
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
 }
 
+     const navbar = document.querySelector('.navbar');
+
+  window.onscroll = function() {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  };
 
 window.onload = function () {
   updateOrderTotalPrice();
@@ -814,9 +739,6 @@ if (totalAmount) {
   document.getElementById('order-total').innerText = `RM ${totalAmount}`;
 } else {
   
-  window.location.href = 'checkout-page.html'; 
-}
-
   </script>
 </body>
 </html>
