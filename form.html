@@ -511,8 +511,8 @@ textarea {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Retrieve the order description and total price from localStorage
-    const orderDescriptionFromStorage = localStorage.getItem('orderDescription');
-    const totalPriceFromStorage = localStorage.getItem('totalPrice');
+    let orderDescriptionFromStorage = localStorage.getItem('orderDescription');
+    let totalPriceFromStorage = localStorage.getItem('totalPrice');
 
     // Get the DOM elements
     const orderTextArea = document.querySelector('textarea[name="order"]');
@@ -524,6 +524,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
    console.log("Cart Total Price: ", total.toFixed(2));
    console.log("Setting orderTotal input: ", totalPriceFromStorage);
+
+       // Set the order total price
+   orderTotalInput.value = (parseFloat(totalPriceFromStorage) && !isNaN(parseFloat(totalPriceFromStorage))) ? parseFloat(totalPriceFromStorage).toFixed(2) : '0.00';
 
 
     // Checkout form submission
@@ -558,11 +561,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }).catch(error => console.error("Error!", error));
     });
 
-            console.log("Submitting order:", formData);
-
-        // Add form submission logic here (e.g., send data to a server)
-        alert("Order submitted successfully!");
-    });
 
     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
