@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product List</title>
+  <title>Telekung Collections</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <style>
   body {
@@ -655,21 +656,21 @@
   }
 
 
-  .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: transparent;
+  background-color: transparent; 
   padding: 10px 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease; 
 }
 
 .navbar.scrolled {
-  background-color: rgba(142, 77, 97, 0.9);
+  background-color: rgba(142, 77, 97, 0.9); 
   color: #ffffff;
 }
 
@@ -678,7 +679,7 @@
   color: #8e4d61;
   text-decoration: none;
   font-weight: bold;
-  background-color: white;
+  background-color:white;
   border-radius: 5px;
   padding: 4px 10px;
 }
@@ -755,84 +756,93 @@
 }
 
 .navbar:hover {
-  background-color: rgba(142, 77, 97, 0.9);
+  background-color: rgba(142, 77, 97, 0.9); 
 }
-
   </style>
 </head>
 <body>
 
-
   <div class="navbar">
     <a href="index.html" class="logo">HijabRose</a>
     <div class="nav-links">
-      <div class="dropdown">
-        <a href="index.html">Home</a>
-        <div class="dropdown-menu">
-          <a href="contact.html">Contact Us</a>
-        </div>
-      </div>
-      <div class="dropdown">
-        <a href="shawl.html">New In</a>
-        <div class="dropdown-menu">
-          <a href="shawl.html">Shawl</a>
-          <a href="bawal1.html">Square</a>
-          <a href="telekung.html">Telekung</a>
-          <a href="instant.html">Instant</a>
-          <a href="accessories.html">Accessories</a>
-        </div>
-      </div>
-      <div class="dropdown">
-        <a href="about.html">About</a>
-        <div class="dropdown-menu">
-          <a href="about.html">About Us</a>
-          <a href="support.html">Privacy & Policy</a>
-          <a href="findstore.html">Find Store</a>
-        </div>
-      </div>
-      <div class="dropdown">
-        <a href="telekung.html">What's New</a>
-        <div class="dropdown-menu">
-          <a href="telekung.html">Telekung</a>
-          <a href="accessories.html">Accessories</a>
-        </div>
-      </div>
-      <div class="dropdown cart-dropdown">
-        <a href="#" onclick="openCartModal()">
-          <i class="fas fa-shopping-bag"></i>
-          <span class="cart-count">0</span>
-        </a>
-        <div id="cart-overlay"></div>
-        <div id="cart-modal" class="modal">
-          <div class="modal-content">
-            <span class="close-btn" onclick="closeCartModal()">×</span>
-            <h2>Your Cart</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-              <p>Total: RM <span id="total-price">0.00</span></p>
+    
+  
+          <div class="dropdown">
+            <a href="index.html">Home</a>
+            <div class="dropdown-menu">
+              <a href="contact.html">Contact Us</a>
             </div>
-            <button class="checkout-button">Proceed to Checkout</button>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+          
+          <div class="dropdown">
+            <a href="shawl.html">New In</a>
+            <div class="dropdown-menu">
+              <a href="shawl.html">Shawl</a>
+              <a href="bawal1.html">Square</a>
+              <a href="telekung.html">Telekung</a>
+              <a href="instant.html">Instant</a>
+              <a href="accessories.html">Accessories</a>
+            </div>
+          </div>
+          
+          <div class="dropdown">
+            <a href="about.html">About</a>
+            <div class="dropdown-menu">
+              <a href="about.html">About Us</a>
+              <a href="support.html">Privacy & Policy</a>
+              <a href="findstore.html">Find Store</a>
+            </div>
+          </div>
+          
+          
+          <div class="dropdown">
+            <a href="telekung.html">What's New</a>
+            <div class="dropdown-menu">
+              <a href="telekung.html">Telekung</a>
+              <a href="accessories.html">Accessories</a>
+            </div>
+          </div>
   
-  <header>
-    <h2>YOUR PERFECT COMPANION FOR EVERY PRAYER</h2>
-  </header>
   
+  
+          <div class="dropdown cart-dropdown">
+            <a href="#" onclick="openCartModal()">
+              <i class="fas fa-shopping-bag"></i>
+              <span id="cart-count" class="cart-count">0</span>
+            </a>
+            <div id="cart-overlay"></div>
+            <div id="cart-modal" class="modal">
+              <div class="modal-content">
+                <span class="close-btn" onclick="closeCartModal()">×</span>
+                <h2>Your Cart</h2>
+            
+                <div id="cart-items">
+                </div>
+            
+                <div class="cart-total">
+                  <p>Total: RM <span id="total-price">0.00</span></p>
+                </div>
+            
+                <button class="checkout-button">Proceed to Checkout</button>
+              </div>
+            </div>
+          </div>
+            </div>
+          </div>
 
 
- 
+<header>
+  <h2>YOUR PERFECT COMPANION FOR EVERY PRAYER</h2>
+</header>
+
+
 <div id="group-1" class="product-group">
   <div class="main-content">
     <div class="product-list">
-   
       <div class="product-card" onclick="showProductDetail(1)">
         <div class="product-image">
-          <img src="img/telekung1.jpg" alt="Product 1" class="first">
-          <img src="img/telekungmaroon.jpg" alt="Product 2 Second" class="second">
+          <img src="telekung1.jpg" alt="Product 1" class="first">
+          <img src="telekungmaroon.jpg" alt="Product 2 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Sofea</h3>
@@ -843,8 +853,8 @@
 
       <div class="product-card" onclick="showProductDetail(2)">
         <div class="product-image">
-          <img src="img/telekung2.jpg" alt="Product 2" class="first">
-          <img src="img/telekunghitam.jpg" alt="Product 2 Second" class="second">
+          <img src="telekung2.jpg" alt="Product 2" class="first">
+          <img src="telekunghitam.jpg" alt="Product 2 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Sajidah</h3>
@@ -855,8 +865,8 @@
 
       <div class="product-card" onclick="showProductDetail(3)">
         <div class="product-image">
-          <img src="img/telekung3.jpg" alt="Product 3" class="first">
-          <img src="img/telekungputih.jpg" alt="Product 3 Second" class="second">
+          <img src="telekung3.jpg" alt="Product 3" class="first">
+          <img src="telekungputih.jpg" alt="Product 3 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Nabella</h3>
@@ -867,8 +877,8 @@
 
       <div class="product-card" onclick="showProductDetail(4)">
         <div class="product-image">
-           <img src="img/telekung4.jpg" alt="Product 4" class="first">
-          <img src="img/telekunglilac.jpg" alt="Product 4 Second" class="second">
+           <img src="telekung4.jpg" alt="Product 4" class="first">
+          <img src="telekunglilac.jpg" alt="Product 4 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Sabrina</h3>
@@ -880,15 +890,13 @@
   </div>
 </div>
 
-
 <div id="group-2" class="product-group" style="display: none;">
   <div class="main-content">
     <div class="product-list">
-      
       <div class="product-card" onclick="showProductDetail(5)">
         <div class="product-image">
-          <img src="img/telekung5.jpg" alt="Product 5" class="first">
-          <img src="img/telekungblue.jpg" alt="Product 5 Second" class="second">
+          <img src="telekung5.jpg" alt="Product 5" class="first">
+          <img src="telekungblue.jpg" alt="Product 5 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Amalia</h3>
@@ -899,8 +907,8 @@
 
       <div class="product-card" onclick="showProductDetail(6)">
         <div class="product-image">
-          <img src="img/telekung6.jpg" alt="Product 6" class="first">
-          <img src="img/telekungmint.jpg" alt="Product 6 Second" class="second">
+          <img src="telekung6.jpg" alt="Product 6" class="first">
+          <img src="telekungmint.jpg" alt="Product 6 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Hanna</h3>
@@ -911,8 +919,8 @@
 
       <div class="product-card" onclick="showProductDetail(7)">
         <div class="product-image">
-          <img src="img/telekung7.jpg" alt="Product 7" class="first">
-          <img src="img/telekungpink.jpg" alt="Product 7 Second" class="second">
+          <img src="telekung7.jpg" alt="Product 7" class="first">
+          <img src="telekungpink.jpg" alt="Product 7 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Ainan</h3>
@@ -923,8 +931,8 @@
 
       <div class="product-card" onclick="showProductDetail(8)">
         <div class="product-image">
-          <img src="img/telekung8.jpg" alt="Product 8" class="first">
-          <img src="img/telekungnude.jpg" alt="Product 8 Second" class="second">
+          <img src="telekung8.jpg" alt="Product 8" class="first">
+          <img src="telekungnude.jpg" alt="Product 8 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Maryam</h3>
@@ -935,7 +943,6 @@
     </div>
   </div>
 </div>
-
 
 <div class="product-navigation" style="text-align: center; margin-top: 20px;">
   <button onclick="showGroup(1)" style="background-color: #f2f2f2; border: 2px solid #ccc; color: #333; font-size: 16px; padding: 8px 16px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
@@ -948,7 +955,6 @@
 
 
 
-
 <div id="product-detail-1" class="product-detail">
   <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
     <div style="flex: 1;">
@@ -957,10 +963,10 @@
 Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer experience. Designed with premium-quality materials, the Sofea telekung offers exceptional comfort, breathability, and elegance.</p>
       <div class="product-detail-price">RM 44.99</div>
       <button class="back-button" onclick="goBack()">Back to Products</button>
-      <button class="add-to-cart" onclick="addToCart(1, 'Sofea', 44.99)">Add to Cart</button>
+      <button class="add-to-cart" onclick="addToCart(1, 'Sofea', 45.00)">Add to Cart</button>
     </div>
-    <img src="img/maroons.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="img/telmaroon1.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="maroons.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="telmaroon1.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -971,10 +977,10 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
       <p class="product-detail-description">The Sajidah telekung is thoughtfully designed to bring comfort, elegance, and devotion together in one beautiful piece. With its superior craftsmanship and practical design, it embodies simplicity and grace for your daily prayers.</p>
       <div class="product-detail-price">RM 44.99</div>
       <button class="back-button" onclick="goBack()">Back to Products</button>
-      <button class="add-to-cart" onclick="addToCart(2, 'Sajidah', 44.99)">Add to Cart</button>
+      <button class="add-to-cart" onclick="addToCart(2, 'Sajidah', 45.00)">Add to Cart</button>
     </div>
-    <img src="img/hitam.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="img/telhitam2.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="hitam.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="telhitam2.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -985,10 +991,10 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
       <p class="product-detail-description">The Nabella telekung brings together understated elegance and unparalleled comfort, designed to enhance your prayer experience. Perfectly tailored for the modern woman, it’s a blend of beauty, serenity, and practicality, making each prayer moment more special.</p>
       <div class="product-detail-price">RM 44.99</div>
       <button class="back-button" onclick="goBack()">Back to Products</button>
-      <button class="add-to-cart" onclick="addToCart(3, 'Nabella', 44.99)">Add to Cart</button>
+      <button class="add-to-cart" onclick="addToCart(3, 'Nabella', 45.00)">Add to Cart</button>
     </div>
-    <img src="img/putih.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="img/telputih3.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="putih.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="telputih3.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -999,10 +1005,10 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
       <p class="product-detail-description">The Sabrina telekung is crafted for those who seek elegance without compromising on comfort. Designed with simplicity and sophistication in mind, it offers a perfect balance of style and functionality for every moment of prayer.</p>
       <div class="product-detail-price">RM 44.99</div>
       <button class="back-button" onclick="goBack()">Back to Products</button>
-      <button class="add-to-cart" onclick="addToCart(4, 'Sabrina', 44.99)">Add to Cart</button>
+      <button class="add-to-cart" onclick="addToCart(4, 'Sabrina', 45.00)">Add to Cart</button>
     </div>
-    <img src="img/lilacs.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="img/tellilac4.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="lilacs.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="tellilac4.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -1015,10 +1021,10 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
       <p class="product-detail-description">The Amalia telekung is the perfect combination of elegance and comfort, designed for those who value both beauty and functionality in their prayer wear. Crafted with care and attention to detail, the Amalia offers a serene, peaceful experience during every moment of worship.</p>
       <div class="product-detail-price">RM 44.99</div>
       <button class="back-button" onclick="goBack()">Back to Products</button>
-      <button class="add-to-cart" onclick="addToCart(5, 'Amalia', 44.99)">Add to Cart</button>
+      <button class="add-to-cart" onclick="addToCart(5, 'Amalia', 45.00)">Add to Cart</button>
     </div>
-    <img src="img/blue.jpg" alt="Product 5" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="img/telblue5.jpg" alt="Product 5 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="blue.jpg" alt="Product 5" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="telblue5.jpg" alt="Product 5 Second" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -1030,10 +1036,10 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
       <p class="product-detail-description">The Hanna telekung is a beautifully crafted prayer garment that combines modern design with traditional elegance. Designed to enhance your prayer experience, it provides a perfect balance of comfort, style, and modesty for every woman who values both beauty and devotion.</p>
       <div class="product-detail-price">RM 44.99</div>
       <button class="back-button" onclick="goBack()">Back to Products</button>
-      <button class="add-to-cart" onclick="addToCart(6, 'Hanna', 44.99)">Add to Cart</button>
+      <button class="add-to-cart" onclick="addToCart(6, 'Hanna', 45.00)">Add to Cart</button>
     </div>
-    <img src="img/mint.jpg" alt="Product 6" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="img/telmint6.jpg" alt="Product 6 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="mint.jpg" alt="Product 6" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="telmint6.jpg" alt="Product 6 Second" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -1045,10 +1051,10 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
       <p class="product-detail-description">The Ainan telekung is designed for those who seek both sophistication and serenity in their prayer wear. Combining premium materials with a refined, timeless design, it ensures a beautiful and comfortable prayer experience every time.</p>
       <div class="product-detail-price">RM 44.99</div>
       <button class="back-button" onclick="goBack()">Back to Products</button>
-      <button class="add-to-cart" onclick="addToCart(7, 'Ainan', 44.99)">Add to Cart</button>
+      <button class="add-to-cart" onclick="addToCart(7, 'Ainan', 45.00)">Add to Cart</button>
     </div>
-    <img src="img/pink.jpg" alt="Product 7" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="img/telpink7.jpg" alt="Product 7 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="pink.jpg" alt="Product 7" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="telpink7.jpg" alt="Product 7 Second" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -1060,10 +1066,10 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
       <p class="product-detail-description">The Maryam telekung is designed to bring tranquility and elegance into every prayer session. With its luxurious fabric and refined details, it offers a seamless combination of style, comfort, and devotion, perfect for the woman who values both beauty and faith.</p>
       <div class="product-detail-price">RM 45.00</div>
       <button class="back-button" onclick="goBack()">Back to Products</button>
-      <button class="add-to-cart" onclick="addToCart(8, 'Maryam', 44.99)">Add to Cart</button>
+      <button class="add-to-cart" onclick="addToCart(8, 'Maryam', 45.00)">Add to Cart</button>
     </div>
-    <img src="img/nude.jpg" alt="Product 8" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="img/telnude8.jpg" alt="Product 8 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="nude.jpg" alt="Product 8" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="telnude8.jpg" alt="Product 8 Second" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -1098,11 +1104,9 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
           <ul style="list-style: none; padding: 0;">
             <div class="dropdown">
                 <li style="margin: 5px 0; text-align: left;"><a href="about.html" style="color: white; text-decoration: none;">About Us</a> 
-                <li style="margin: 5px 0; text-align: left;"><a href="hiring.html" style="color: white; text-decoration: none;">We're Hiring</a></li> 
-                <li style="margin: 5px 0; text-align: left;"><a href="support.html" style="color: white; text-decoration: none;">Support</a></li> 
+                 <li style="margin: 5px 0; text-align: left;"><a href="support.html" style="color: white; text-decoration: none;">Support</a></li> 
                 <li style="margin: 5px 0; text-align: left;"><a href="findstore.html" style="color: white; text-decoration: none;">Find Store</a></li> 
-                <li style="margin: 5px 0; text-align: left;"><a href="shipment.html" style="color: white; text-decoration: none;">Shipment</a></li> 
-              </div>
+                </div>
             </div>
           </ul>
       </div>
@@ -1142,146 +1146,148 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
 </div>
 
 
+
+
 <script>
-let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-function showGroup(groupNumber) {
-  document.getElementById('group-1').style.display = 'none';
-  document.getElementById('group-2').style.display = 'none';
-
-  if (groupNumber === 1) {
-    document.getElementById('group-1').style.display = 'block';
-  } else if (groupNumber === 2) {
-    document.getElementById('group-2').style.display = 'block';
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  
+  function showGroup(groupNumber) {
+    document.getElementById('group-1').style.display = 'none';
+    document.getElementById('group-2').style.display = 'none';
+  
+    if (groupNumber === 1) {
+      document.getElementById('group-1').style.display = 'block';
+    } else if (groupNumber === 2) {
+      document.getElementById('group-2').style.display = 'block';
+    }
   }
-}
-
-const navbar = document.querySelector('.navbar');
-
-window.onscroll = function() {
-  if (window.scrollY > 50) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-};
-
-document.querySelector('.checkout-button').addEventListener('click', () => {
-  if (cartItems.length > 0) {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    window.location.href = 'form.html';
-  } else {
-    alert("Your cart is empty!");
-  }
-});
-
-function showToast(message) {
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.textContent = message;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
-
-function addToCart(productId, productName, productPrice) {
-  productPrice = parseFloat(productPrice);
-
-  if (isNaN(productPrice)) {
-    showToast("Invalid product price!");
-    return;
-  }
-
-  const itemIndex = cartItems.findIndex(item => item.name === productName);
-
-  if (itemIndex === -1) {
-    cartItems.push({ name: productName, price: productPrice, quantity: 1 });
-  } else {
-    cartItems[itemIndex].quantity++;
-  }
-
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  showToast(`${productName} has been added to your cart.`);
-  updateCart();
-}
-
-showGroup(1);
-
-function openCartModal() {
-  const cartOverlay = document.getElementById("cart-overlay");
-  const cartModal = document.getElementById("cart-modal");
-  const cartItemsContainer = document.getElementById("cart-items");
-  let updatedTotalPrice = 0;
-
-  cartItemsContainer.innerHTML = "";
-
-  cartItems = cartItems.filter(item => item.quantity > 0);
-
-  cartItems.forEach(item => {
-    if (item.quantity > 0 && !isNaN(item.price)) {
-      updatedTotalPrice += item.price * item.quantity;
-      const cartItemElement = document.createElement("div");
-      cartItemElement.classList.add("cart-item");
-      cartItemElement.innerHTML = `
-        <h3>${item.name}</h3>
-        <p class="quantity">Quantity: ${item.quantity}</p>
-        <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
-        <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
-      `;
-      cartItemsContainer.appendChild(cartItemElement);
+  
+  const navbar = document.querySelector('.navbar');
+  
+  window.onscroll = function() {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  };
+  
+  document.querySelector('.checkout-button').addEventListener('click', () => {
+    if (cartItems.length > 0) {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      window.location.href = 'form.html';
+    } else {
+      alert("Your cart is empty!");
     }
   });
-
-  document.getElementById("total-price").innerText = updatedTotalPrice.toFixed(2);
-
-  cartModal.style.display = "flex";
-  cartOverlay.style.display = "block";
-}
-
-function closeCartModal() {
-  document.getElementById("cart-modal").style.display = "none";
-  document.getElementById("cart-overlay").style.display = "none";
-}
-
-function updateCart() {
-  document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
-  if (document.getElementById("cart-modal").style.display === "flex") {
-    openCartModal();
+  
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
   }
-}
-
-function deductItem(productName) {
-  const item = cartItems.find(item => item.name === productName);
-  if (item && item.quantity > 1) {
-    item.quantity--;
-  } else {
-    cartItems = cartItems.filter(item => item.name !== productName);
+  
+  function addToCart(productId, productName, productPrice) {
+    productPrice = parseFloat(productPrice);
+  
+    if (isNaN(productPrice)) {
+      showToast("Invalid product price!");
+      return;
+    }
+  
+    const itemIndex = cartItems.findIndex(item => item.name === productName);
+  
+    if (itemIndex === -1) {
+      cartItems.push({ name: productName, price: productPrice, quantity: 1 });
+    } else {
+      cartItems[itemIndex].quantity++;
+    }
+  
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    showToast(`${productName} has been added to your cart.`);
+    updateCart();
   }
-
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  updateCart();
-}
-
-function showProductDetail(productId) {
-  for (let i = 1; i <= 8; i++) {
-    document.getElementById('product-detail-' + i).style.display = 'none';
+  
+  showGroup(1);
+  
+  function openCartModal() {
+    const cartOverlay = document.getElementById("cart-overlay");
+    const cartModal = document.getElementById("cart-modal");
+    const cartItemsContainer = document.getElementById("cart-items");
+    let updatedTotalPrice = 0;
+  
+    cartItemsContainer.innerHTML = "";
+  
+    cartItems = cartItems.filter(item => item.quantity > 0);
+  
+    cartItems.forEach(item => {
+      if (item.quantity > 0 && !isNaN(item.price)) {
+        updatedTotalPrice += item.price * item.quantity;
+        const cartItemElement = document.createElement("div");
+        cartItemElement.classList.add("cart-item");
+        cartItemElement.innerHTML = `
+          <h3>${item.name}</h3>
+          <p class="quantity">Quantity: ${item.quantity}</p>
+          <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
+          <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+      }
+    });
+  
+    document.getElementById("total-price").innerText = updatedTotalPrice.toFixed(2);
+  
+    cartModal.style.display = "flex";
+    cartOverlay.style.display = "block";
   }
-
-  document.getElementById('product-detail-' + productId).style.display = 'block';
-}
-
-function goBack() {
-  for (let i = 1; i <= 8; i++) {
-    document.getElementById('product-detail-' + i).style.display = 'none';
+  
+  function closeCartModal() {
+    document.getElementById("cart-modal").style.display = "none";
+    document.getElementById("cart-overlay").style.display = "none";
   }
-  window.scrollTo(0, 0);
-}
-
-function updateTotalPrice() {
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  document.getElementById('total-price').innerText = total.toFixed(2);
-}
-</script>
-</body>
-</html>
+  
+  function updateCart() {
+    document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  
+    if (document.getElementById("cart-modal").style.display === "flex") {
+      openCartModal();
+    }
+  }
+  
+  function deductItem(productName) {
+    const item = cartItems.find(item => item.name === productName);
+    if (item && item.quantity > 1) {
+      item.quantity--;
+    } else {
+      cartItems = cartItems.filter(item => item.name !== productName);
+    }
+  
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    updateCart();
+  }
+  
+  function showProductDetail(productId) {
+    for (let i = 1; i <= 8; i++) {
+      document.getElementById('product-detail-' + i).style.display = 'none';
+    }
+  
+    document.getElementById('product-detail-' + productId).style.display = 'block';
+  }
+  
+  function goBack() {
+    for (let i = 1; i <= 8; i++) {
+      document.getElementById('product-detail-' + i).style.display = 'none';
+    }
+    window.scrollTo(0, 0);
+  }
+  
+  function updateTotalPrice() {
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    document.getElementById('total-price').innerText = total.toFixed(2);
+  }
+  </script>
+  </body>
+  </html>
