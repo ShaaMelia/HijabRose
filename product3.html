@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <style>
+  
   body {
     font-family: 'Playfair Display', serif;
     background-color: #f5f5f5;
@@ -839,56 +840,59 @@
 </header>
 
 
-<div class="product-card" onclick="showProductDetail(1)">
-  <div class="product-image">
-    <img src="salju.jpg" alt="Product 1" class="first">
-    <img src="saljuu.jpg" alt="Product 2 Second" class="second">
-  </div>
-  <div class="product-info">
-    <h3>Salju Instant</h3>
-    <p>Soft and elegant</p>
-    <p class="product-price">RM 19.99</p>
-  </div>
-</div>
+<div id="group-1" class="product-group">
+  <div class="main-content">
+    <div class="product-list">
 
-<div class="product-card" onclick="showProductDetail(2)">
-  <div class="product-image">
-    <img src="sakura.jpg" alt="Product 2" class="first">
-    <img src="sakuraa.jpg" alt="Product 2 Second" class="second">
-  </div>
-  <div class="product-info">
-    <h3>Sakura Instant</h3>
-    <p>Light and breathable</p>
-    <p class="product-price">RM 19.99</p>
-  </div>
-</div>
+      <div class="product-card" onclick="showProductDetail(1)">
+        <div class="product-image">
+          <img src="salju.jpg" alt="Product 1" class="first">
+          <img src="saljuu.jpg" alt="Product 2 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Salju Instant</h3>
+          <p>Soft and elegant</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
 
-<div class="product-card" onclick="showProductDetail(3)">
-  <div class="product-image">
-    <img src="ayu.jpg" alt="Product 3" class="first">
-    <img src="ayuu.jpg" alt="Product 3 Second" class="second">
-  </div>
-  <div class="product-info">
-    <h3>Ayu Instant</h3>
-    <p>Light and breathable</p>
-    <p class="product-price">RM 19.99</p>
-  </div>
-</div>
+      <div class="product-card" onclick="showProductDetail(2)">
+        <div class="product-image">
+          <img src="sakura.jpg" alt="Product 2" class="first">
+          <img src="sakuraa.jpg" alt="Product 2 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Sakura Instant</h3>
+          <p>Light and breathable</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
 
-<div class="product-card" onclick="showProductDetail(4)">
-  <div class="product-image">
-    <img src="rose.jpg" alt="Product 4" class="first">
-    <img src="rosee.jpg" alt="Product 4 Second" class="second">
-  </div>
-  <div class="product-info">
-    <h3>Rose Instant</h3>
-    <p>Light and breathable</p>
-    <p class="product-price">RM 19.99</p>
-  </div>
-</div>
+      <div class="product-card" onclick="showProductDetail(3)">
+        <div class="product-image">
+          <img src="ayu.jpg" alt="Product 3" class="first">
+          <img src="ayuu.jpg" alt="Product 3 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Ayu Instant</h3>
+          <p>Light and breathable</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
 
-</div>
-</div>
+      <div class="product-card" onclick="showProductDetail(4)">
+        <div class="product-image">
+          <img src="rose.jpg" alt="Product 4" class="first">
+          <img src="rosee.jpg" alt="Product 4 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Instant</h3>
+          <p>Light and breathable</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -911,7 +915,7 @@
       <div class="product-card" onclick="showProductDetail(6)">
         <div class="product-image">
           <img src="romanticrose.jpg" alt="Product 6" class="first">
-          <img src="romanticrosee.jpg" alt="Product 6 Second" class="second">
+          <img src="romantirosee.jpg" alt="Product 6 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Romantic Rose Instant</h3>
@@ -934,8 +938,8 @@
 
       <div class="product-card" onclick="showProductDetail(8)">
         <div class="product-image">
-          <img src="dusty.jpg" alt="Product 8" class="first">
-          <img src="dustyyy.jpg" alt="Product 8 Second" class="second">
+          <img src="Dusty.jpg" alt="Product 8" class="first">
+          <img src="Dustyy.jpg" alt="Product 8 Second" class="second">
         </div>
         <div class="product-info">
           <h3>Dusty Rose Instant</h3>
@@ -999,7 +1003,6 @@
     <img src="ayuu.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
-
 
 <div id="product-detail-4" class="product-detail">
   <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
@@ -1071,8 +1074,8 @@
       <button class="back-button" onclick="goBack()">Back to Products</button>
       <button class="add-to-cart" onclick="addToCart(8, 'Product 8', 19.99)">Add to Cart</button>
     </div>
-    <img src="dusty.jpg" alt="Product 8" style="width: 30%; height: auto; border-radius: 10px;">
-    <img src="dustyy.jpg" alt="Product 8 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="Dusty.jpg" alt="Product 8" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="Dustyy.jpg" alt="Product 8 Second" style="width: 30%; height: auto; border-radius: 10px;">
   </div>
 </div>
 
@@ -1092,7 +1095,7 @@
         <div class="footer-section" style="flex: 1; padding: 0 20px; max-width: 25%;">
           <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">Quick Shop</h5>
           <ul style="list-style: none; padding: 0;">
-              <li style="margin: 5px 0; text-align: left;"><a href="#" style="color: white; text-decoration: none;">Shawl</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="shawl.html" style="color: white; text-decoration: none;">Shawl</a></li>
               <li style="margin: 5px 0; text-align: left;"><a href="bawal1.html" style="color: white; text-decoration: none;">Square</a></li>
               <li style="margin: 5px 0; text-align: left;"><a href="instant.html" style="color: white; text-decoration: none;">Instant</a></li>
               <li style="margin: 5px 0; text-align: left;"><a href="telekung.html" style="color: white; text-decoration: none;">Telekung</a></li>
@@ -1106,10 +1109,8 @@
           <ul style="list-style: none; padding: 0;">
             <div class="dropdown">
                 <li style="margin: 5px 0; text-align: left;"><a href="about.html" style="color: white; text-decoration: none;">About Us</a> 
-                <li style="margin: 5px 0; text-align: left;"><a href="hiring.html" style="color: white; text-decoration: none;">We're Hiring</a></li> 
                 <li style="margin: 5px 0; text-align: left;"><a href="support.html" style="color: white; text-decoration: none;">Support</a></li> 
                 <li style="margin: 5px 0; text-align: left;"><a href="findstore.html" style="color: white; text-decoration: none;">Find Store</a></li> 
-                <li style="margin: 5px 0; text-align: left;"><a href="shipment.html" style="color: white; text-decoration: none;">Shipment</a></li> 
               </div>
             </div>
           </ul>
