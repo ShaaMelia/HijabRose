@@ -1219,7 +1219,8 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
     let updatedTotalPrice = 0;
   
     cartItemsContainer.innerHTML = "";
-  
+    
+    cartItems = cartItems.filter(item => item.quantity > 0);
 
     cartItems.forEach(item => {
         if (item.quantity > 0) {
@@ -1252,20 +1253,12 @@ Introducing Sofea, a symbol of grace and devotion crafted to elevate your prayer
   function updateCart() {
     document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+     if (document.getElementById("cart-modal").style.display === "flex") {
+      openCartModal();
+    }
   }
   
-  function addToCart(productName, productPrice) {
-    const itemIndex = cartItems.findIndex(item => item.name === productName);
-
-    if (itemIndex === -1) {
-        cartItems.push({ name: productName, price: parseFloat(productPrice), quantity: 1 });
-    } else {
-        cartItems[itemIndex].quantity++;
-    }
-
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    updateCart();
-}
   function deductItem(productName) {
     const item = cartItems.find(item => item.name === productName);
     if (item && item.quantity > 1) {
