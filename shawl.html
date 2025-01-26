@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+  body {
+    font-family: 'Playfair Display', serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding-bottom: 0;
+    color: #333;
+  }
+
+  .cart-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .cart-icon .icon {
+    font-size: 40px;
+    color: #333;
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 50%;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    left: 0;
+    width: 100%;
+    max-height: 80%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  #cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+  }
+
+  #cart-items {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    list-style-type: none;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  .cart-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #ff6666;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .close-btn:hover {
+    color: #cc4d4d;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+
+  .cart-item-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+
+  .cart-item-details {
+    flex: 1;
+    margin-left: 10px;
+  }
+
+  .deduct-button {
+    background-color: #ff6666;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .deduct-button:hover {
+    background-color: #cc4d4d;
+    transform: scale(1.1);
+  }
+
+  .deduct-button:focus {
+    outline: none;
+  }
+
+  .cart-total {
+    margin-top: 20px;
+    text-align: right;
+  }
+
+  .checkout-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .checkout-button:hover {
+    background-color: #45a049;
+  }
+
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .product-info {
+    padding: 20px;
+    text-align: left;
+  }
+
+  .product-info h3 {
+    font-size: 18px;
+    color: #8e4d61;
+    margin: 0;
+  }
+
+  .product-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+  }
+
+  .product-price {
+    font-size: 18px;
+    color: #8e4d61;
+    font-weight: bold;
+  }
+
+  .product-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .product-image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .product-image img.second {
+    transform: translateX(100%);
+  }
+
+  .product-card:hover .product-image img.first {
+    transform: translateX(-100%);
+  }
+
+  .product-card:hover .product-image img.second {
+    transform: translateX(0);
+  }
+
+  .product-detail {
+    display: none;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .product-detail h2 {
+    font-size: 24px;
+    color: #8e4d61;
+  }
+
+  .product-detail .product-detail-description {
+    font-size: 16px;
+    color: #555;
+  }
+
+  .product-detail .product-detail-price {
+    font-size: 20px;
+    color: #8e4d61;
+    font-weight: bold;
+  }
+
+  .back-button {
+    background-color: #8e4d61;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .back-button:hover {
+    background-color: #7a3e52;
+  }
+
+  .add-to-cart {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .add-to-cart:hover {
+    background-color: #45a049;
+  }
+
+  .cart-item {
+    margin-bottom: 15px;
+  }
+
+  .cart-item h3 {
+    font-size: 16px;
+    color: #8e4d61;
+  }
+
+  .cart-item .quantity {
+    margin-top: 5px;
+    color: #555;
+  }
+
+  .cart-item .price {
+    color: #8e4d61;
+    font-weight: bold;
+  }
+
+  .cart-total {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #8e4d61;
+  }
+
+  .shopping-bag-icon {
+    display: inline-flex;
+    align-items: center;
+    font-size: 28px;
+    color: #333;
+    position: relative;
+  }
+
+  .shopping-bag-icon .item-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #FF6F61;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .shopping-bag-icon:hover {
+    color: #FF99CC;
+    transform: scale(1.1);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  #cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+  }
+
+  #cart-items {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    list-style-type: none;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  .cart-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #ff6666;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .close-btn:hover {
+    color: #cc4d4d;
+  }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+
+  .cart-item-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+
+  .cart-item-details {
+    flex: 1;
+    margin-left: 10px;
+  }
+
+  .deduct-button {
+    background-color: #ff6666;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .deduct-button:hover {
+    background-color: #cc4d4d;
+    transform: scale(1.1);
+  }
+
+  .deduct-button:focus {
+    outline: none;
+  }
+
+  .cart-total {
+    margin-top: 20px;
+    text-align: right;
+  }
+
+  .checkout-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .checkout-button:hover {
+    background-color: #45a049;
+  }
+
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .product-info {
+    padding: 20px;
+    text-align: left;
+  }
+
+  .product-info h3 {
+    font-size: 18px;
+    color: #8e4d61;
+    margin: 0;
+  }
+
+  .product-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+  }
+
+  .product-price {
+    font-size: 18px;
+    color: #8e4d61;
+    font-weight: bold;
+  }
+
+  .product-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .product-image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .product-image img.second {
+    transform: translateX(100%);
+  }
+
+  .product-card:hover .product-image img.first {
+    transform: translateX(-100%);
+  }
+
+  .product-card:hover .product-image img.second {
+    transform: translateX(0);
+  }
+
+  .product-detail {
+    display: none;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .product-detail h2 {
+    font-size: 24px;
+    color: #8e4d61;
+  }
+
+  .product-detail .product-detail-description {
+    font-size: 16px;
+    color: #555;
+  }
+
+  .product-detail .product-detail-price {
+    font-size: 20px;
+    color: #8e4d61;
+    font-weight: bold;
+  }
+
+  .back-button {
+    background-color: #8e4d61;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .back-button:hover {
+    background-color: #7a3e52;
+  }
+
+  .add-to-cart {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .add-to-cart:hover {
+    background-color: #45a049;
+  }
+
+  .cart-item {
+    margin-bottom: 15px;
+  }
+
+  .cart-item h3 {
+    font-size: 16px;
+    color: #8e4d61;
+  }
+
+  .cart-item .quantity {
+    margin-top: 5px;
+    color: #555;
+  }
+
+  .cart-item .price {
+    color: #8e4d61;
+    font-weight: bold;
+  }
+
+  .cart-total {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #8e4d61;
+  }
+
+
+  header {
+    background-color: #f8f9fa;
+    padding: 50px 20px;
+    font-size: 30px;
+    font-weight: 400;
+    color: #8e4d61;
+    text-align: center;
+  }
+
+
+  .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.navbar.scrolled {
+  background-color: rgba(142, 77, 97, 0.9);
+  color: #ffffff;
+}
+
+.navbar .logo {
+  font-size: 24px;
+  color: #8e4d61;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 5px;
+  padding: 4px 10px;
+}
+
+.navbar .nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+  background-color: white;
+  color: #8e4d61;
+}
+
+.navbar .dropdown {
+  position: relative;
+}
+
+.navbar .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  padding: 12px 0;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+  transition: all 0.3s ease;
+}
+
+.navbar .dropdown:hover .dropdown-menu {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar .dropdown-menu a {
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  display: block;
+  text-align: left;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.navbar .dropdown-menu a:hover {
+  background-color: #f5f5f5;
+  color: #8e4d61;
+  transform: translateX(5px);
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+}
+
+.navbar:hover {
+  background-color: rgba(142, 77, 97, 0.9);
+}
+
+  </style>
+</head>
+<body>
+
+
+  <div class="navbar">
+    <a href="#" class="logo">HijabRose</a>
+    <div class="nav-links">
+    
+  
+          <div class="dropdown">
+            <a href="index.html">Home</a>
+            <div class="dropdown-menu">
+              <a href="contact.html">Contact Us</a>
+            </div>
+          </div>
+          
+          <div class="dropdown">
+            <a href="shawl.html">New In</a>
+            <div class="dropdown-menu">
+              <a href="shawl.html">Shawl</a>
+              <a href="bawal1.html">Square</a>
+              <a href="telekung.html">Telekung</a>
+              <a href="instant.html">Instant</a>
+              <a href="accessories.html">Accessories</a>
+            </div>
+          </div>
+          
+          <div class="dropdown">
+            <a href="about.html">About</a>
+            <div class="dropdown-menu">
+              <a href="about.html">About Us</a>
+              <a href="support.html">Privacy & Policy</a>
+              <a href="findstore.html">Find Store</a>
+            </div>
+          </div>
+          
+          
+          <div class="dropdown">
+            <a href="telekung.html">What's New</a>
+            <div class="dropdown-menu">
+              <a href="telekung.html">Telekung</a>
+              <a href="accessories.html">Accessories</a>
+            </div>
+          </div>
+  
+  
+  
+          <div class="dropdown cart-dropdown">
+            <a href="#" onclick="openCartModal()">
+              <i class="fas fa-shopping-bag"></i>
+              <span id="cart-count" class="cart-count">0</span>
+            </a>
+            <div id="cart-overlay"></div>
+            <div id="cart-modal" class="modal">
+              <div class="modal-content">
+                <span class="close-btn" onclick="closeCartModal()">×</span>
+                <h2>Your Cart</h2>
+            
+                <div id="cart-items">
+                </div>
+            
+                <div class="cart-total">
+                  <p>Total: RM <span id="total-price">0.00</span></p>
+                </div>
+            
+                <button class="checkout-button">Proceed to Checkout</button>
+              </div>
+            </div>
+          </div>
+            </div>
+          </div>
+
+
+<header>
+  <h2>Shawl HijabRose Collection</h2>
+  <center><h5>"Elegant, comfortable, and versatile shawls for any occasion."</h5></center>
+</header>
+
+
+<center><h1 id="caption-group-1">Printed Hijab Rose</h1></center>
+<div id="group-1" class="product-group">
+  <div class="main-content">
+    <div class="product-list">
+
+      <div class="product-card" onclick="showProductDetail(1)">
+        <div class="product-image">
+          <img src="img/printed1.jpg" alt="Product 1" class="first">
+          <img src="img/printed1b.webp" alt="Product 1 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Dahlia Azure</h3>
+          <p>Timeless Elegance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(2)">
+        <div class="product-image">
+          <img src="img/printed2.jpg" alt="Product 2" class="first">
+          <img src="img/printed2b.webp" alt="Product 2 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Dahlia Crème</h3>
+          <p>Timeless Elegance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(3)">
+        <div class="product-image">
+          <img src="img/printed3.jpg" alt="Product 3" class="first">
+          <img src="img/printed3b.webp" alt="Product 3 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Dahlia Blossom</h3>
+          <p>Timeless Elegance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(4)">
+        <div class="product-image">
+          <img src="img/printed4.jpg" alt="Product 4" class="first">
+          <img src="img/printed4b.webp" alt="Product 4 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Dahlia Mocha</h3>
+          <p>Timeless Elegance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(5)">
+        <div class="product-image">
+          <img src="img/printed5.jpg" alt="Product 5" class="first">
+          <img src="img/printed5b.webp" alt="Product 5 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Dahlia Mist</h3>
+          <p>Timeless Elegance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(6)">
+        <div class="product-image">
+          <img src="img/printed6.jpeg" alt="Product 6" class="first">
+          <img src="img/printed6b.jpeg" alt="Product 6 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Camellia Sapphire</h3>
+          <p>Fresh Sophistication</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(7)">
+        <div class="product-image">
+          <img src="img/printed7.jpeg" alt="Product 7" class="first">
+          <img src="img/printed7b.jpeg" alt="Product 7 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Camellia Jade</h3>
+          <p>Fresh Sophistication</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(8)">
+        <div class="product-image">
+          <img src="img/printed8.jpeg" alt="Product 8" class="first">
+          <img src="img/printed8b.jpeg" alt="Product 8 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Camellia Snow </h3>
+          <p>Fresh Sophistication</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(9)">
+        <div class="product-image">
+          <img src="img/printed9.jpeg" alt="Product 9" class="first">
+          <img src="img/printed9b.jpeg" alt="Product 9 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Camellia Sand </h3>
+          <p>Fresh Sophistication</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(10)">
+        <div class="product-image">
+          <img src="img/printed10.jpeg" alt="Product 10" class="first">
+          <img src="img/printed10b.jpeg" alt="Product 10 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Camellia Sky </h3>
+          <p>Fresh Sophistication</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(11)">
+        <div class="product-image">
+          <img src="img/printed11.jpg" alt="Product 11" class="first">
+          <img src="img/printed11b.jpg" alt="Product 11 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Lavender Midnight </h3>
+          <p>Classic Romance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(12)">
+        <div class="product-image">
+          <img src="img/printed12.jpg" alt="Product 12" class="first">
+          <img src="img/printed12b.jpg" alt="Product 12 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Lavender Maple</h3>
+          <p>Classic Romance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(13)">
+        <div class="product-image">
+          <img src="img/printed13.jpg" alt="Product 13" class="first">
+          <img src="img/printed13b.jpg" alt="Product 13 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Lavender Ivory</h3>
+          <p>Classic Romance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(14)">
+        <div class="product-image">
+          <img src="img/printed14.jpg" alt="Product 14" class="first">
+          <img src="img/printed14b.jpg" alt="Product 14 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Lavender Rouge</h3>
+          <p>Classic Romance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(15)">
+        <div class="product-image">
+          <img src="img/printed15.jpg" alt="Product 15" class="first">
+          <img src="img/printed15b.jpg" alt="Product 15 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Lavender Vanilla</h3>
+          <p>Classic Romance</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(16)">
+        <div class="product-image">
+          <img src="img/printed16.jpeg" alt="Product 16" class="first">
+          <img src="img/printed16b.jpeg" alt="Product 16 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Iris Violet</h3>
+          <p>Bold Allure</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(17)">
+        <div class="product-image">
+          <img src="img/printed17.jpeg" alt="Product 17" class="first">
+          <img src="img/printed17b.jpeg" alt="Product 17 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Iris Crimson</h3>
+          <p>Bold Allure</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(18)">
+        <div class="product-image">
+          <img src="img/printed18.jpeg" alt="Product 18" class="first">
+          <img src="img/printed18b.jpeg" alt="Product 18 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Iris Noir</h3>
+          <p>Bold Allure</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(19)">
+        <div class="product-image">
+          <img src="img/printed19.jpeg" alt="Product 19" class="first">
+          <img src="img/printed19b.jpeg" alt="Product 19 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Iris Bluebell</h3>
+          <p>Bold Allure</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(20)">
+        <div class="product-image">
+          <img src="img/printed20.jpeg" alt="Product 20" class="first">
+          <img src="img/printed20b.jpeg" alt="Product 20 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Iris Ashleaf</h3>
+          <p>Bold Allure</p>
+          <p class="product-price">RM 19.99</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<center><h1 id="caption-group-2" style="display: none;">Plain Hijab Rose</h1></center>
+<div id="group-2" class="product-group" style="display: none;">
+  <div class="main-content">
+    <div class="product-list">
+      <div class="product-card" onclick="showProductDetail(21)">
+        <div class="product-image">
+          <img src="img/plain1.jpg" alt="Product 21" class="first">
+          <img src="img/plain1b.jpg" alt="Product 21 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Petal Ash Grey</h3>
+          <p>Pleated Glitter Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(22)">
+        <div class="product-image">
+          <img src="img/plain2.jpg" alt="Product 22" class="first">
+          <img src="img/plain2b.jpg" alt="Product 22 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Petal Midnight Blue</h3>
+          <p>Pleated Glitter Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(23)">
+        <div class="product-image">
+          <img src="img/plain3.jpg" alt="Product 23" class="first">
+          <img src="img/plain3b.jpg" alt="Product 23 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Petal Smoke Grey</h3>
+          <p>Pleated Glitter Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(24)">
+        <div class="product-image">
+          <img src="img/plain4.jpg" alt="Product 24" class="first">
+          <img src="img/plain4b.jpg" alt="Product 24 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Petal Sky Blue</h3>
+          <p>Pleated Glitter Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(25)">
+        <div class="product-image">
+          <img src="img/plain5.jpg" alt="Product 25" class="first">
+          <img src="img/plain5b.jpg" alt="Product 25 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Petal Cream</h3>
+          <p>Pleated Glitter Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(26)">
+        <div class="product-image">
+          <img src="img/plain6.webp" alt="Product 26" class="first">
+          <img src="img/plain6b.webp" alt="Product 26 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Blush Midnight Blue</h3>
+          <p>Crumple Matte Satin</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(27)">
+        <div class="product-image">
+          <img src="img/plain7.webp" alt="Product 27" class="first">
+          <img src="img/plain7b.webp" alt="Product 27 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Blush Light Grey</h3>
+          <p>Crumple Matte Satin</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(28)">
+        <div class="product-image">
+          <img src="img/plain8.webp" alt="Product 28" class="first">
+          <img src="img/plain8b.webp" alt="Product 28 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Blush Brownwood</h3>
+          <p>Crumple Matte Satin</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(29)">
+        <div class="product-image">
+          <img src="img/plain9.webp" alt="Product 29" class="first">
+          <img src="img/plain9b.webp" alt="Product 29 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Blush Light Pink</h3>
+          <p>Crumple Matte Satin</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(30)">
+        <div class="product-image">
+          <img src="img/plain10.webp" alt="Product 30" class="first">
+          <img src="img/plain10b.webp" alt="Product 30 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Blush Ashleaf</h3>
+          <p>Crumple Matte Satin</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(31)">
+        <div class="product-image">
+          <img src="img/plain11.jpg" alt="Product 31" class="first">
+          <img src="img/plain11b.jpg" alt="Product 31 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rosewood Black</h3>
+          <p>Modal Cotton Silk</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(32)">
+        <div class="product-image">
+          <img src="img/plain12.jpg" alt="Product 32" class="first">
+          <img src="img/plain12b.jpg" alt="Product 32 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rosewood Light Pink</h3>
+          <p>Modal Cotton Silk</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(33)">
+        <div class="product-image">
+          <img src="img/plain13.jpg" alt="Product 33" class="first">
+          <img src="img/plain13b.jpg" alt="Product 33 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rosewood Dark Brown</h3>
+          <p>Modal Cotton Silk</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(34)">
+        <div class="product-image">
+          <img src="img/plain14.jpg" alt="Product 34" class="first">
+          <img src="img/plain14b.jpg" alt="Product 34 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rosewood Ash Grey</h3>
+          <p>Modal Cotton Silk</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(35)">
+        <div class="product-image">
+          <img src="img/plain15.jpg" alt="Product 35" class="first">
+          <img src="img/plain15b.jpg" alt="Product 35 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rosewood Light Brown</h3>
+          <p>Modal Cotton Silk</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(36)">
+        <div class="product-image">
+          <img src="img/plain16.jpg" alt="Product 36" class="first">
+          <img src="img/plain16b.webp" alt="Product 36 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Noir Light Grey</h3>
+          <p>Korean Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(37)">
+        <div class="product-image">
+          <img src="img/plain17.jpg" alt="Product 37" class="first">
+          <img src="img/plain17b.webp" alt="Product 37 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Noir Light Purple</h3>
+          <p>Korean Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(38)">
+        <div class="product-image">
+          <img src="img/plain18.jpg" alt="Product 38" class="first">
+          <img src="img/plain18b.jpg" alt="Product 38 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Noir Light Red</h3>
+          <p>Korean Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(39)">
+        <div class="product-image">
+          <img src="img/plain19.jpg" alt="Product 39" class="first">
+          <img src="img/plain19b.jpg" alt="Product 39 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Noir Smoke Grey</h3>
+          <p>Korean Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="showProductDetail(40)">
+        <div class="product-image">
+          <img src="img/plain20.jpg" alt="Product 40" class="first">
+          <img src="img/plain20b.jpg" alt="Product 40 Second" class="second">
+        </div>
+        <div class="product-info">
+          <h3>Rose Noir Wood Green</h3>
+          <p>Korean Chiffon</p>
+          <p class="product-price">RM 18.99</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="product-navigation" style="text-align: center; margin-top: 20px;">
+  <button onclick="showGroup(1)" style="background-color: #f2f2f2; border: 2px solid #ccc; color: #333; font-size: 16px; padding: 8px 16px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
+    1
+  </button>
+  <button onclick="showGroup(2)" style="background-color: #f2f2f2; border: 2px solid #ccc; color: #333; font-size: 16px; padding: 8px 16px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
+    2
+  </button>
+</div>
+
+
+
+<div id="product-detail-1" class="product-detail">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Dahlia Azure</h2>
+      <p style="text-align: left;" class="product-detail-description">A serene hue inspired by clear skies, perfect for adding a calming elegance to your look</p>
+      <div class="product-detail-price">RM 19.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(1, 'Dahlia Azure', 19.99)">Add to Cart</button>
+    </div>
+    <img src="img/printed1.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="img/printed1bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-2" class="product-detail">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Dahlia Crème</h2>
+      <p class="product-detail-description">A soft, neutral tone that radiates simplicity and timeless beauty</p>
+      <div class="product-detail-price">RM 19.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(2, 'Dahlia Crème', 19.99)">Add to Cart</button>
+    </div>
+    <img src="img/printed2.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="img/printed2bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-3" class="product-detail">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Dahlia Blossom</h2>
+      <p class="product-detail-description">Delicate and feminine, reminiscent of blooming dahlia petals in spring</p>
+      <div class="product-detail-price">RM 19.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(3, 'Dahlia Blossom', 19.99)">Add to Cart</button>
+    </div>
+    <img src="img/printed3.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="img/printed3bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-4" class="product-detail">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Dahlia Mocha </h2>
+      <p class="product-detail-description">A warm, earthy shade that grounds your style in sophistication</p>
+      <div class="product-detail-price">RM 19.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(4, 'Dahlia Mocha', 19.99)">Add to Cart</button>
+    </div>
+    <img src="img/printed4.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="img/printed4bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-5" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Dahlia Mist </h2>
+        <p class="product-detail-description">A subtle, misty tone evoking quiet mornings and graceful charm</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(5, 'Dahlia Mist', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed5.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed5bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-6" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Camellia Sapphire</h2>
+        <p class="product-detail-description">Vibrant and bold, like the sparkling blue of camellia blooms under the sun</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(6, 'Camellia Sapphire', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed6.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed6b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-7" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Camellia Jade</h2>
+        <p class="product-detail-description"> A refreshing green inspired by the lush foliage of camellia gardens</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(7, 'Camellia Jade', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed7.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed7b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-8" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Camellia Snow </h2>
+        <p class="product-detail-description">Pure and pristine, capturing the delicate beauty of camellia petals</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(8, 'Camellia Snow ', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed8.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed8b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-9" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Camellia Sand</h2>
+        <p class="product-detail-description">A gentle, warm tone resembling the soft earth beneath blooming flowers</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(9, 'Camellia Sand', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed9.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed9b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-10" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Camellia Sky</h2>
+        <p class="product-detail-description">Airy and light, reflecting the dreamy skies where camellias thrive</p>
+        <div class="product-detail-price">RM 8.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(10, 'Camellia Sky', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed10.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed10b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-11" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Lavender Midnight</h2>
+        <p class="product-detail-description">Deep and rich, like a starry night sky over lavender fields</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(11, 'Lavender Midnight', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed11.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed11bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-12" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Lavender Maple</h2>
+        <p class="product-detail-description">A warm, cozy shade echoing the earthy tones of lavender stems</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(12, 'Lavender Maple', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed12.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed12bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-13" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Lavender Ivory </h2>
+        <p class="product-detail-description">Soft and subtle, as delicate as the pale hues of lavender blooms</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(13, 'Lavender Ivory', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed13.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed13bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-14" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Lavender Rouge</h2>
+        <p class="product-detail-description">Bold and romantic, inspired by the deep accents in lavender arrangements</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(14, 'Lavender Rouge', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed14.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed14bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-15" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Lavender Vanilla</h2>
+        <p class="product-detail-description">A creamy, comforting shade reminiscent of lavender’s calming essence</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(15, 'Lavender Vanilla', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed15.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed15bb.jpg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-16" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Iris Violet </h2>
+        <p class="product-detail-description">A vibrant purple symbolizing the regal beauty of iris petals</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(16, 'Iris Violet', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed16.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed16b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-17" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Iris Crimson</h2>
+        <p class="product-detail-description">A striking shade of burgundy, representing the passion and drama of the iris</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(17, 'Iris Crimson', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed17.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed17b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-18" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Iris Noir</h2>
+        <p class="product-detail-description">Deep and mysterious, a bold reflection of the iris’s timeless allure</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(18, 'Iris Noir', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed18.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed18b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-19" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Iris Bluebell</h2>
+        <p class="product-detail-description"> A calming shade of blue inspired by the delicate petals of bluebell flowers, evoking tranquility and grace</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(19, 'Iris Bluebell', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed19.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed19b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-20" class="product-detail">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Iris Ashleaf</h2>
+        <p class="product-detail-description">A muted grey-green, like the soft leaves that frame iris flowers in nature</p>
+        <div class="product-detail-price">RM 19.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(20, 'Iris Ashleaf', 19.99)">Add to Cart</button>
+      </div>
+      <img src="img/printed20.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/printed20b.jpeg" alt="HijabRose Team" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+
+<div id="product-detail-21" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Rose Petal Ash Grey</h2>
+      <p class="product-detail-description">Light, airy, and sparkling elegance—flowy pleats with a touch of shimmer for timeless glam. </p>
+      <div class="product-detail-price">RM 18.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(21, 'Rose Petal Ash Grey', 18.99)">Add to Cart</button>
+    </div>
+    <img src="img/plain1.jpg" alt="Product 21" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="img/plain1b.jpg" alt="Product 21 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-22" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Rose Petal Midnight Blue</h2>
+      <p class="product-detail-description">Light, airy, and sparkling elegance—flowy pleats with a touch of shimmer for timeless glam. </p>
+      <div class="product-detail-price">RM 18.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(22, 'Rose Petal Midnight Blue<', 18.99)">Add to Cart</button>
+    </div>
+    <img src="img/plain2.jpg" alt="Product 22" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="img/plain2b.jpg" alt="Product 22 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-23" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Rose Petal Smoke Grey</h2>
+      <p class="product-detail-description">Light, airy, and sparkling elegance—flowy pleats with a touch of shimmer for timeless glam. </p>
+      <div class="product-detail-price">RM 18.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(23, 'Rose Petal Smoke Grey', 18.99)">Add to Cart</button>
+    </div>
+    <img src="img/plain3.jpg" alt="Product 23" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="img/plain3b.jpg" alt="Product 23 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-24" class="product-detail" style="display: none;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+    <div style="flex: 1;">
+      <h2>Rose Petal Sky Blue</h2>
+      <p class="product-detail-description">Light, airy, and sparkling elegance—flowy pleats with a touch of shimmer for timeless glam. </p>
+      <div class="product-detail-price">RM 18.99</div>
+      <button class="back-button" onclick="goBack()">Back to Products</button>
+      <button class="add-to-cart" onclick="addToCart(24, 'Rose Petal Sky Blue', 18.99)">Add to Cart</button>
+    </div>
+    <img src="img/plain4.jpg" alt="Product 24" style="width: 30%; height: auto; border-radius: 10px;">
+    <img src="img/plain4b.jpg" alt="Product 24 Second" style="width: 30%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+
+<div id="product-detail-25" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Petal Cream</h2>
+        <p class="product-detail-description">Light, airy, and sparkling elegance—flowy pleats with a touch of shimmer for timeless glam. </p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(25, 'Rose Petal Cream', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain5.jpg" alt="Product 25" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain5b.jpg" alt="Product 25 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-26" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Blush Midnight Blue</h2>
+        <p class="product-detail-description">A unique, textured fabric with soft, crumpled waves and a refined matte finish—adds depth and understated elegance to any look.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(26, 'Rose Blush Midnight Blue', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain6.webp" alt="Product 26" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain6b.webp" alt="Product 26 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-27" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Blush Light Grey</h2>
+        <p class="product-detail-description">A unique, textured fabric with soft, crumpled waves and a refined matte finish—adds depth and understated elegance to any look.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(27, 'Rose Blush Light Grey', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain7.webp" alt="Product 27" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain7b.webp" alt="Product 27 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-28" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Blush Brownwood</h2>
+        <p class="product-detail-description">A unique, textured fabric with soft, crumpled waves and a refined matte finish—adds depth and understated elegance to any look.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(28, 'Rose Blush Brownwood', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain8.webp" alt="Product 28" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain8b.webp" alt="Product 28 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-29" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Blush Light Pink</h2>
+        <p class="product-detail-description">A unique, textured fabric with soft, crumpled waves and a refined matte finish—adds depth and understated elegance to any look.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(29, 'Rose Blush Light Pink', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain9.webp" alt="Product 29" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain9b.webp" alt="Product 29 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-30" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Blush Ashleaf</h2>
+        <p class="product-detail-description">A unique, textured fabric with soft, crumpled waves and a refined matte finish—adds depth and understated elegance to any look.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(30, 'Rose Blush Ashleaf', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain10.webp" alt="Product 30" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain10b.webp" alt="Product 30 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-31" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rosewood Black</h2>
+        <p class="product-detail-description">A smooth, luxurious blend that feels like silk with the breathability of cotton—light and soft on the skin.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(31, 'Rosewood Black', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain11.jpg" alt="Product 31" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain11b.jpg" alt="Product 31 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-32" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rosewood Light Pink</h2>
+        <p class="product-detail-description">A smooth, luxurious blend that feels like silk with the breathability of cotton—light and soft on the skin.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(32, 'Rosewood Light Pink', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain12.jpg" alt="Product 32" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain12b.jpg" alt="Product 32 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-33" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rosewood Dark Brown</h2>
+        <p class="product-detail-description">A smooth, luxurious blend that feels like silk with the breathability of cotton—light and soft on the skin.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(33, 'Rosewood Dark Brown', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain13.jpg" alt="Product 33" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain13b.jpg" alt="Product 33 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-34" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rosewood Ash Grey</h2>
+        <p class="product-detail-description">A smooth, luxurious blend that feels like silk with the breathability of cotton—light and soft on the skin.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(34, 'Rosewood Ash Grey', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain14.jpg" alt="Product 34" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain14b.jpg" alt="Product 34 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-35" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rosewood Light Brown</h2>
+        <p class="product-detail-description">A smooth, luxurious blend that feels like silk with the breathability of cotton—light and soft on the skin.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(35, 'Rosewood Light Brown', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain15.jpg" alt="Product 35" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain15b.jpg" alt="Product 35 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-36" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Noir Light Grey</h2>
+        <p class="product-detail-description"> Lightweight, sheer, and fluid—delicately drapes with a subtle shine, perfect for elegant movement.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(36, 'Rose Noir Light Grey', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain16.jpg" alt="Product 36" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain16b.webp" alt="Product 36 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-37" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Noir Light Purple</h2>
+        <p class="product-detail-description"> Lightweight, sheer, and fluid—delicately drapes with a subtle shine, perfect for elegant movement.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(37, 'Rose Noir Light Purple', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain17.jpg" alt="Product 37" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain17b.webp" alt="Product 37 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-38" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Noir Light Red</h2>
+        <p class="product-detail-description"> Lightweight, sheer, and fluid—delicately drapes with a subtle shine, perfect for elegant movement.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(38, 'Rose Noir Light Red', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain18.jpg" alt="Product 38" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain18b.jpg" alt="Product 38 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-39" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Noir Smoke Grey</h2>
+        <p class="product-detail-description"> Lightweight, sheer, and fluid—delicately drapes with a subtle shine, perfect for elegant movement.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(39, 'Rose Noir Smoke Grey', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain19.jpg" alt="Product 39" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain19b.jpg" alt="Product 39 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+  <div id="product-detail-40" class="product-detail" style="display: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px;">
+      <div style="flex: 1;">
+        <h2>Rose Noir Wood green</h2>
+        <p class="product-detail-description"> Lightweight, sheer, and fluid—delicately drapes with a subtle shine, perfect for elegant movement.</p>
+        <div class="product-detail-price">RM 18.99</div>
+        <button class="back-button" onclick="goBack()">Back to Products</button>
+        <button class="add-to-cart" onclick="addToCart(40, 'Rose Noir Wood green', 18.99)">Add to Cart</button>
+      </div>
+      <img src="img/plain20.jpg" alt="Product 40" style="width: 30%; height: auto; border-radius: 10px;">
+      <img src="img/plain20b.jpg" alt="Product 40 Second" style="width: 30%; height: auto; border-radius: 10px;">
+    </div>
+  </div>
+
+
+<div class="footer" style="background-color: #8e4d61; color: white; bottom: 0; left: 0; width: 100%; padding: 20px 0; display: flex; flex-direction: column; box-sizing: border-box;">
+  <div class="footer-content" style="display: flex; justify-content: space-between; width: 80%; max-width: 1200px; margin-bottom: 10px;">
+    <div class="footer-container" style="display: flex; justify-content: space-between; width: 100%; gap: 20px;"> 
+      <div class="footer-section" style="flex: 1; padding: 0 20px;">
+  <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">Get In Touch</h5>
+  <p style="color: white; margin: 5px 0; text-align: left;">Sign up for exclusive offers, original stories, events, and more.</p>
+  <p style="color: white; margin: 5px 0; text-align: left;"><i class="fa fa-map-marker-alt"></i> Johor, Malaysia</p>
+  <p style="color: white; margin: 5px 0; text-align: left;"><i class="fa fa-envelope"></i> hijabrosehq@gmail.com</p>
+  <p style="color: white; margin: 5px 0; text-align: left;"><i class="fa fa-phone-alt"></i> +6011-27334095</p>
+</div>
+
+
+        <div class="footer-section" style="flex: 1; padding: 0 20px; max-width: 25%;">
+          <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">Quick Shop</h5>
+          <ul style="list-style: none; padding: 0;">
+              <li style="margin: 5px 0; text-align: left;"><a href="#" style="color: white; text-decoration: none;">Shawl</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="bawal1.html" style="color: white; text-decoration: none;">Square</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="instant.html" style="color: white; text-decoration: none;">Instant</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="telekung.html" style="color: white; text-decoration: none;">Telekung</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="accessories.html" style="color: white; text-decoration: none;">Accessories</a></li>
+          </ul>
+      </div>
+
+
+      <div class="footer-section" style="flex: 1; padding: 0 20px; max-width: 25%;">
+          <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">About Us</h5>
+          <ul style="list-style: none; padding: 0;">
+            <div class="dropdown">
+                <li style="margin: 5px 0; text-align: left;"><a href="about.html" style="color: white; text-decoration: none;">About Us</a> 
+                <li style="margin: 5px 0; text-align: left;"><a href="hiring.html" style="color: white; text-decoration: none;">We're Hiring</a></li> 
+                <li style="margin: 5px 0; text-align: left;"><a href="support.html" style="color: white; text-decoration: none;">Support</a></li> 
+                <li style="margin: 5px 0; text-align: left;"><a href="findstore.html" style="color: white; text-decoration: none;">Find Store</a></li> 
+                <li style="margin: 5px 0; text-align: left;"><a href="shipment.html" style="color: white; text-decoration: none;">Shipment</a></li> 
+              </div>
+            </div>
+          </ul>
+      </div>
+      <div class="footer-section" style="flex: 1; padding: 0 20px; max-width: 25%;">
+      <h5 style="font-size: 16px; margin-top: 10px; text-align: left;">Find Us At:</h5>
+      <div class="social-icons" style="display: flex; gap: 10px;">
+        <a href="https://www.facebook.com/" target="_blank" style="color: white; font-size: 20px; text-decoration: none;">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/" target="_blank" style="color: white; font-size: 20px; text-decoration: none;">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/601127334095" target="_blank" style="color: white; font-size: 20px; text-decoration: none;">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+  </div>
+</div>
+
+      <br>
+      <div class="footer-section" style="flex: 1; padding: 0 20px; text-align: center;">
+          <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">Newsletter</h5>
+          <p style="font-size: 14px; margin: 5px 0; color: white;">Sign up to stay up-to-date on all our latest arrivals, modest trends, and first dibs on great offers!</p>
+          <form action="" style="display: flex; flex-direction: column;">
+              <input type="email" placeholder="Your Email Address" style="padding: 10px; margin-bottom: 5px; border: none; border-radius: 5px; font-size: 14px;">
+              <button type="submit" style="padding: 10px; border: none; border-radius: 5px; background-color: #333; color: white; font-size: 14px; cursor: pointer;">Sign Up</button>
+          </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom" style="text-align: center; width: 100%; padding: 10px 0; background-color: #7a3e52; font-size: 12px;">
+    <p style="color: white; text-align: center; bottom: 0;">&copy; 2025 HijabRose Fashion Sdn Bhd. All rights reserved.</p>
+</div>
+</div>
+</div>
+
+<script>
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+  function showGroup(groupNumber) {
+    document.getElementById('group-1').style.display = 'none';
+    document.getElementById('group-2').style.display = 'none';
+
+    if (groupNumber === 1) {
+      document.getElementById('group-1').style.display = 'block';
+    } else if (groupNumber === 2) {
+      document.getElementById('group-2').style.display = 'block';
+    }
+  }
+
+  document.querySelector('.checkout-button').addEventListener('click', () => {
+    if (cartItems.length > 0) {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      window.location.href = 'form.html';
+    } else {
+      alert("Your cart is empty!");
+    }
+  });
+
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  function addToCart(productId, productName, productPrice) {
+    productPrice = parseFloat(productPrice);
+
+    if (isNaN(productPrice)) {
+      showToast("Invalid product price!");
+      return;
+    }
+
+    const itemIndex = cartItems.findIndex(item => item.name === productName);
+
+    if (itemIndex === -1) {
+      cartItems.push({ name: productName, price: productPrice, quantity: 1 });
+    } else {
+      cartItems[itemIndex].quantity++;
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    showToast(`${productName} has been added to your cart.`);
+    updateCart();
+  }
+
+  showGroup(1);
+
+  function openCartModal() {
+    const cartOverlay = document.getElementById("cart-overlay");
+    const cartModal = document.getElementById("cart-modal");
+    const cartItemsContainer = document.getElementById("cart-items");
+    let updatedTotalPrice = 0;
+
+    cartItemsContainer.innerHTML = "";
+
+    cartItems = cartItems.filter(item => item.quantity > 0);
+
+    cartItems.forEach(item => {
+      if (item.quantity > 0 && !isNaN(item.price)) {
+        updatedTotalPrice += item.price * item.quantity;
+        const cartItemElement = document.createElement("div");
+        cartItemElement.classList.add("cart-item");
+        cartItemElement.innerHTML = `
+          <h3>${item.name}</h3>
+          <p class="quantity">Quantity: ${item.quantity}</p>
+          <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
+          <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+      }
+    });
+
+    document.getElementById("total-price").innerText = updatedTotalPrice.toFixed(2);
+
+    cartModal.style.display = "flex";
+    cartOverlay.style.display = "block";
+  }
+
+  function closeCartModal() {
+    document.getElementById("cart-modal").style.display = "none";
+    document.getElementById("cart-overlay").style.display = "none";
+  }
+
+  const navbar = document.querySelector('.navbar');
+
+  window.onscroll = function() {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  };
+
+  function updateCart() {
+    document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+    if (document.getElementById("cart-modal").style.display === "flex") {
+      openCartModal();
+    }
+  }
+
+  function deductItem(productName) {
+    const item = cartItems.find(item => item.name === productName);
+    if (item && item.quantity > 1) {
+      item.quantity--;
+    } else {
+      cartItems = cartItems.filter(item => item.name !== productName);
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    updateCart();
+  }
+
+  function showProductDetail(productId) {
+    document.getElementById('product-detail-' + productId).style.display = 'block';
+  }
+
+  function goBack() {
+    const productDetails = document.querySelectorAll('.product-detail');
+
+    productDetails.forEach(function(productDetail) {
+      productDetail.style.display = 'none';
+    });
+
+    window.scrollTo(0, 0);
+  }
+
+  function updateTotalPrice() {
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    document.getElementById('total-price').innerText = total.toFixed(2);
+  }
+</script>
+</body>
+</html>
+

@@ -1,0 +1,1093 @@
+<html>
+<html lang="en">
+<head>
+  <title>HIJABROSE</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+  body, h1, h2, h3, h4, h5 {
+    font-family: 'Playfair Display', serif;
+    margin: 0; 
+    padding: 0; 
+  }
+
+header.w3-container {
+  margin: 0; 
+  padding: 0; 
+  background-color: #f4f4f4; 
+}
+
+.header-container {
+  text-align: center;
+  padding: 20px;
+}
+  
+.slideshow-container {
+    width: 100%;
+    height: auto; 
+    overflow: hidden;
+}
+
+.slide img {
+    width: 100%;
+    height: auto; 
+    display: block;
+}
+.w3-main {
+  padding: 20px;
+}
+
+.product-card .w3-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.product-card img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+.view-more-btn {
+  background-color: #f5e0e1; 
+  color: #8e4d61;  
+  border: 2px solid transparent;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.view-more-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: rgba(142, 77, 97, 0.3);
+  transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.view-more-btn:hover::after {
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 50%;
+}
+
+.view-more-btn:hover {
+  background-color: #8e4d61; 
+  color: white; 
+  border-color: #f5e0e1; 
+}
+
+.w3-sidebar {
+  width: 200px;
+  background: #f4f4f4;
+  display: none;
+  position: fixed;
+  height: 100%;
+  z-index: 1;
+}
+
+.w3-bar-block .w3-bar-item {
+  padding: 15px;
+}
+
+.w3-main {
+  margin-left: 0;
+  padding: 20px;
+}
+
+.toggle-btn {
+  background-color: #333;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+}
+
+.toggle-btn:hover {
+  background-color: #555;
+}
+
+.product-card {
+  margin-bottom: 20px;
+}
+
+.bank-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  background-color: #8e4d61; 
+  border: none; 
+}
+
+.bank-icons img {
+  width: 60px; 
+  height: auto;
+  margin: 10px; 
+  box-shadow: none; 
+  border: none; 
+}
+
+.footer {
+  background-color: #8e4d61; 
+  color: white;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 1200px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.footer-section {
+  flex: 1 1 20%; 
+  padding: 0 20px;
+  text-align: left;
+}
+
+.footer-section h5 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.footer-section p,
+.footer-section ul,
+.footer-section form {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li a {
+  color: #8e4d61;
+  text-decoration: none;
+  display: block;
+  margin: 5px 0;
+}
+
+.footer-section ul li a:hover {
+  font-size: 16px;
+  text-decoration: underline; 
+}
+
+.footer-section form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-section input {
+  padding: 10px;
+  margin-bottom: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.footer-section button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.footer-section button:hover {
+  background-color: #555;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #8e4d61; 
+  text-shadow: 0 0 8px rgb(223, 149, 171), 0 0 10px rgb(222, 146, 169), 0 0 15px rgba(142, 77, 97, 1);
+}
+
+.footer-bottom {
+  text-align: left;
+  width: 100%;
+  padding: 10px 0;
+  background-color: #7a3e52; 
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);  
+}
+
+.w3-container {
+  text-align: center;
+}
+
+.toggle-btn {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+      flex-direction: column;
+  }
+  .footer-section {
+      max-width: 100%;
+      margin-bottom: 20px; 
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent; 
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease; 
+}
+
+.navbar.scrolled {
+  background-color: rgba(142, 77, 97, 0.9); 
+  color: #ffffff;
+}
+
+.navbar .logo {
+  font-size: 24px;
+  color: #8e4d61;
+  text-decoration: none;
+  font-weight: bold;
+  background-color:white;
+  border-radius: 5px;
+  padding: 4px 10px;
+}
+
+.navbar .nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+  background-color: white;
+  color: #8e4d61;
+}
+
+.navbar .dropdown {
+  position: relative;
+}
+
+.navbar .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  padding: 12px 0;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+  transition: all 0.3s ease;
+}
+
+.navbar .dropdown:hover .dropdown-menu {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar .dropdown-menu a {
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  display: block;
+  text-align: left;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.navbar .dropdown-menu a:hover {
+  background-color: #f5f5f5;
+  color: #8e4d61;
+  transform: translateX(5px);
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+}
+
+.navbar:hover {
+  background-color: rgba(142, 77, 97, 0.9); 
+}
+
+header {
+  background-color: #8e4d61;
+  padding: 50px 20px;
+  font-size: 30px;
+  font-weight: 400;
+  color: #f8f9fa;
+  text-align: center;
+}
+
+.add-to-cart {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.add-to-cart:hover {
+  background-color: #45a049;
+}
+
+.cart-item {
+  margin-bottom: 15px;
+}
+
+.cart-item h3 {
+  font-size: 16px;
+  color: #8e4d61;
+}
+
+.cart-item .quantity {
+  margin-top: 5px;
+  color: #555;
+}
+
+.cart-item .price {
+  color: #8e4d61;
+  font-weight: bold;
+}
+
+.cart-total {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #8e4d61;
+}
+
+.shopping-bag-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 28px;
+  color: #333; 
+  position: relative; 
+}
+
+.shopping-bag-icon .item-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #FF6F61; 
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shopping-bag-icon:hover {
+  color: #FF99CC; 
+  transform: scale(1.1); 
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.modal {
+  display: none; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1000; 
+  padding: 20px;
+  box-sizing: border-box; 
+}
+
+#cart-overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 999; 
+  display: none; 
+}
+
+#cart-items {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-bottom: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  list-style-type: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc; 
+  margin-bottom: 10px; 
+}
+
+.cart-item:last-child {
+  margin-bottom: 0;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+  max-height: 80vh; 
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #ff6666;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #cc4d4d;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.cart-item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.cart-item-details {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.deduct-button {
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.deduct-button:hover {
+  background-color: #cc4d4d;
+  transform: scale(1.1);
+}
+
+.deduct-button:focus {
+  outline: none;
+}
+
+.cart-total {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.checkout-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.checkout-button:hover {
+  background-color: #45a049;
+}
+
+.cart-dropdown {
+  display: inline-block;
+  margin-left: 20px; 
+}
+
+.cart-dropdown a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000;
+}
+
+.cart-dropdown .cart-count {
+  margin-left: 5px;
+  background-color: red; 
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.slideshow-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
+
+.mySlides {
+  width: 100%;
+  height: auto;
+  display: none; 
+}
+
+.mySlides.active {
+  display: block; 
+}
+
+@keyframes slide-animation {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(-200%);
+  }
+  75% {
+    transform: translateX(-300%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slideshow-container .slide {
+  animation: slide-animation 10s infinite;
+}
+  </style>
+</head>
+<body>
+
+
+<div class="navbar">
+  <a href="index.html" class="logo">HijabRose</a>
+  <div class="nav-links">
+    
+    <div class="dropdown">
+      <a href="index.html">Home</a>
+      <div class="dropdown-menu">
+        <a href="contact.html">Contact Us</a>
+        
+      </div>
+    </div>
+    
+    <div class="dropdown">
+      <a href="shawl.html">New In</a>
+      <div class="dropdown-menu">
+        <a href="shawl.html">Shawl</a>
+        <a href="bawal1.html">Square</a>
+        <a href="telekung.html">Telekung</a>
+        <a href="instant.html">Instant</a>
+        <a href="accessories.html">Accessories</a>
+      </div>
+    </div>
+    
+    <div class="dropdown">
+      <a href="about.html">About</a>
+      <div class="dropdown-menu">
+        <a href="about.html">About Us</a>
+        <a href="support.html">Privacy & Policy</a>
+        <a href="findstore.html">Find Store</a>
+      </div>
+    </div>
+    
+    <div class="dropdown">
+      <a href="#">What's New</a>
+      <div class="dropdown-menu">
+        <a href="telekung.html">Telekung</a>
+        <a href="accessories.html">Accessories</a>
+      </div>
+    </div>
+
+
+    
+    <div class="dropdown cart-dropdown">
+      <a href="#" onclick="openCartModal()">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-count">0</span> 
+      </a>
+      
+      <div id="cart-overlay"></div>
+      <div id="cart-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeCartModal()">×</span>
+          <h2>Your Cart</h2>
+      
+        
+          <div id="cart-items">
+          </div>
+      
+          <div class="cart-total">
+            <p>Total: RM <span id="total-price">0.00</span></p>
+          </div>
+      
+          <button class="checkout-button">Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="w3-main">
+  <header>
+     𝐖𝐄𝐋𝐂𝐎𝐌𝐄  𝐓𝐎  𝐇𝐈𝐉𝐀𝐁𝐑𝐎𝐒𝐄 ™ 
+    </header>
+
+
+
+
+  <div class="slideshow-container">
+    <div class="slide">
+      <img class="mySlides" src="img/tudung1.jpg" alt="Image 1">
+      <img class="mySlides" src="img/tudung2.jpg" alt="Image 2">
+      <img class="mySlides" src="img/tudung3.jpg" alt="Image 3">
+      <img class="mySlides" src="img/tudung4.jpg" alt="Image 4">
+      
+    </div>
+  </div>
+  
+
+<div class="w3-main">
+
+
+<center><h2>Our Products</h2></center>
+
+  <div style="text-align: center; margin: 20px 0;">
+    <div style="width: 100%; background-color: #f4f4f4; padding: 10px; box-sizing: border-box;">
+      <marquee behavior="scroll" direction="left" style="font-size: 20px; font-weight: bold; color: #8e4d61;">
+        ❀ Welcome to Our Product Showcase! Check out the latest trends! ❀
+      </marquee>
+    </div>
+  </div>
+  
+
+    
+  <div class="w3-col l3 m6 s12 product-card hover-scale">
+    <a href="product1.html">
+        <div class="w3-card">
+            <img src="img/product3.jpg" alt="Product 1" style="width:100%">
+            <div class="w3-container">
+                <p>SHAWL</p>
+                <p><b>RM19.99</b></p>
+                <button class="view-more-btn" onclick="window.location.href='product1.html'">View More</button>
+            </div>
+        </div>
+    </a>
+</div>
+
+     
+<div class="w3-col l3 m6 s12 product-card hover-scale">
+        <a href="product2.html">
+          <div class="w3-card">
+            <img src="img/product2.jpg" alt="Product 2" style="width:100%">
+            <div class="w3-container">
+              <p>SQUARE</p>
+              <p><b>RM19.99</b></p>
+              <button class="view-more-btn" onclick="window.location.href='product2.html'">View More</button>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+
+      <div class="w3-col l3 m6 s12 product-card hover-scale">
+        <a href="product3.html">
+          <div class="w3-card">
+            <img src="img/product4.jpg" alt="Product 3" style="width:100%">
+            <div class="w3-container">
+              <p>INSTANT</p>
+              <p><b>RM19.50</b></p>
+              <button class="view-more-btn" onclick="window.location.href='produc32.html'">View More</button>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+
+      <div class="w3-col l3 m6 s12 product-card hover-scale">
+        <a href="product4.html">
+          <div class="w3-card">
+            <img src="img/product1.jpg" alt="Product 4" style="width:100%">
+            <div class="w3-container">
+              <p>TELEKUNG</p>
+              <p><b>RM45.00</b></p>
+              <button class="view-more-btn" onclick="window.location.href='product4.html'">View More</button>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="footer" style="background-color: #8e4d61; color: white; bottom: 0; left: 0; width: 100%; padding: 20px 0; display: flex; flex-direction: column; box-sizing: border-box;">
+  <div class="footer-content" style="display: flex; justify-content: space-between; width: 80%; max-width: 1200px; margin-bottom: 10px;">
+    <div class="footer-container" style="display: flex; justify-content: space-between; width: 100%; gap: 20px;"> 
+      <div class="footer-section" style="flex: 1; padding: 0 20px;">
+  <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">Get In Touch</h5>
+  <p style="color: white; margin: 5px 0; text-align: left;">Sign up for exclusive offers, original stories, events, and more.</p>
+  <p style="color: white; margin: 5px 0; text-align: left;"><i class="fa fa-map-marker-alt"></i> Johor, Malaysia</p>
+  <p style="color: white; margin: 5px 0; text-align: left;"><i class="fa fa-envelope"></i> hijabrosehq@gmail.com</p>
+  <p style="color: white; margin: 5px 0; text-align: left;"><i class="fa fa-phone-alt"></i> +6011-27334095</p>
+</div>
+
+
+        <div class="footer-section" style="flex: 1; padding: 0 20px; max-width: 25%;">
+          <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">Quick Shop</h5>
+          <ul style="list-style: none; padding: 0;">
+              <li style="margin: 5px 0; text-align: left;"><a href="#" style="color: white; text-decoration: none;">Shawl</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="bawal1.html" style="color: white; text-decoration: none;">Square</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="instant.html" style="color: white; text-decoration: none;">Instant</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="telekung.html" style="color: white; text-decoration: none;">Telekung</a></li>
+              <li style="margin: 5px 0; text-align: left;"><a href="accessories.html" style="color: white; text-decoration: none;">Accessories</a></li>
+          </ul>
+      </div>
+
+
+      <div class="footer-section" style="flex: 1; padding: 0 20px; max-width: 25%;">
+          <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">About Us</h5>
+          <ul style="list-style: none; padding: 0;">
+            <div class="dropdown">
+                <li style="margin: 5px 0; text-align: left;"><a href="about.html" style="color: white; text-decoration: none;">About Us</a> 
+                <li style="margin: 5px 0; text-align: left;"><a href="hiring.html" style="color: white; text-decoration: none;">We're Hiring</a></li> 
+                <li style="margin: 5px 0; text-align: left;"><a href="support.html" style="color: white; text-decoration: none;">Support</a></li> 
+                <li style="margin: 5px 0; text-align: left;"><a href="findstore.html" style="color: white; text-decoration: none;">Find Store</a></li> 
+                <li style="margin: 5px 0; text-align: left;"><a href="shipment.html" style="color: white; text-decoration: none;">Shipment</a></li> 
+              </div>
+            </div>
+          </ul>
+      </div>
+      <div class="footer-section" style="flex: 1; padding: 0 20px; max-width: 25%;">
+      <h5 style="font-size: 14px; margin-top: 10px; text-align: left;">Find Us At:</h5>
+      <div class="social-icons" style="display: flex; gap: 10px;">
+        <a href="https://www.facebook.com/" target="_blank" style="color: white; font-size: 20px; text-decoration: none;">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/" target="_blank" style="color: white; font-size: 20px; text-decoration: none;">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/601127334095" target="_blank" style="color: white; font-size: 20px; text-decoration: none;">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+  </div>
+</div>
+
+      <br>
+      <div class="footer-section" style="flex: 1; padding: 0 20px; text-align: center;">
+          <h5 style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">Newsletter</h5>
+          <p style="font-size: 14px; margin: 5px 0;">Sign up to stay up-to-date on all our latest arrivals, modest trends, and first dibs on great offers!</p>
+          <form action="" style="display: flex; flex-direction: column;">
+              <input type="email" placeholder="Your Email Address" style="padding: 10px; margin-bottom: 5px; border: none; border-radius: 5px; font-size: 14px;">
+              <button type="submit" style="padding: 10px; border: none; border-radius: 5px; background-color: #333; color: white; font-size: 14px; cursor: pointer;">Sign Up</button>
+          </form>
+
+      </div>
+    </div>
+  </div>
+  
+<div class="bank-icons">
+  <a href="https://www.maybank2u.com.my/" target="_blank">
+    <img src="img/maybank.jpg" alt="Maybank">
+  </a>
+  <a href="https://www.bankislam.com.my/" target="_blank">
+    <img src="img/bankislam.jpg" alt="Bank Islam">
+  </a>
+  <a href="https://www.bsn.com.my/" target="_blank">
+    <img src="img/bsn.png" alt="BSN">
+  </a>
+  <a href="https://www.cimb.com.my/" target="_blank">
+    <img src="img/cimb.jpg" alt="CIMB">
+  </a>
+  <a href="https://www.publicbank.com.my/" target="_blank">
+    <img src="img/publicbank.png" alt="Public Bank">
+  </a>
+  <a href="https://www.rhbgroup.com/" target="_blank">
+    <img src="img/rhb.jpg" alt="RHB">
+  </a>
+  <a href="https://www.hlb.com.my/en/personal-banking/home.html" target="_blank">
+    <img src="img/hongleong.jpg" alt="Hong Leong">
+  </a>
+</div>
+
+  <div class="footer-bottom" style="text-align: center; width: 100%; padding: 10px 0; background-color: #7a3e52; font-size: 12px;">
+      <p style="color: white; text-align: center; bottom: 0;">&copy; 2025 HijabRose Fashion Sdn Bhd. All rights reserved.</p>
+  </div>
+</div>
+
+
+</div>
+
+
+<script>
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+document.querySelector('.checkout-button').addEventListener('click', () => {
+  if (cartItems.length > 0) {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    window.location.href = 'form.html';
+  } else {
+    alert("Your cart is empty!");
+  }
+});
+
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function addToCart(productId, productName, productPrice) {
+  productPrice = parseFloat(productPrice);
+
+  if (isNaN(productPrice)) {
+    showToast("Invalid product price!");
+    return;
+  }
+
+  const itemIndex = cartItems.findIndex(item => item.name === productName);
+
+  if (itemIndex === -1) {
+    cartItems.push({ name: productName, price: productPrice, quantity: 1 });
+  } else {
+    cartItems[itemIndex].quantity++;
+  }
+
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  showToast(`${productName} has been added to your cart.`);
+  updateCart();
+}
+
+const navbar = document.querySelector('.navbar');
+
+window.onscroll = function() {
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+};
+
+function openCartModal() {
+  const cartOverlay = document.getElementById("cart-overlay");
+  const cartModal = document.getElementById("cart-modal");
+  const cartItemsContainer = document.getElementById("cart-items");
+  let updatedTotalPrice = 0;
+
+  cartItemsContainer.innerHTML = "";
+
+  cartItems = cartItems.filter(item => item.quantity > 0);
+
+  cartItems.forEach(item => {
+    if (item.quantity > 0 && !isNaN(item.price)) {
+      updatedTotalPrice += item.price * item.quantity;
+      const cartItemElement = document.createElement("div");
+      cartItemElement.classList.add("cart-item");
+      cartItemElement.innerHTML = `
+        <h3>${item.name}</h3>
+        <p class="quantity">Quantity: ${item.quantity}</p>
+        <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
+        <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
+      `;
+      cartItemsContainer.appendChild(cartItemElement);
+    }
+  });
+
+  document.getElementById("total-price").innerText = updatedTotalPrice.toFixed(2);
+
+  cartModal.style.display = "flex";
+  cartOverlay.style.display = "block";
+}
+
+function closeCartModal() {
+  document.getElementById("cart-modal").style.display = "none";
+  document.getElementById("cart-overlay").style.display = "none";
+}
+
+function updateCart() {
+  document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+  if (document.getElementById("cart-modal").style.display === "flex") {
+    openCartModal();
+  }
+}
+
+function deductItem(productName) {
+  const item = cartItems.find(item => item.name === productName);
+  if (item && item.quantity > 1) {
+    item.quantity--;
+  } else {
+    cartItems = cartItems.filter(item => item.name !== productName);
+  }
+
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  updateCart();
+}
+
+function updateTotalPrice() {
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  document.getElementById('total-price').innerText = total.toFixed(2);
+}
+
+let cart = [];
+
+function addToCart(productName, price) {
+  cart.push({ name: productName, price: price });
+  document.getElementById('cart-count').textContent = cart.length;
+  alert(productName + " has been added to your cart!");
+}
+
+function goToCart() {
+  alert("Redirecting to cart page.");
+  console.log(cart);
+  window.location.href = "cart.html";
+}
+
+let slideIndex = 0;
+
+function showSlides() {
+  let slides = document.querySelectorAll(".mySlides");
+
+  slides.forEach(slide => slide.classList.remove("active"));
+
+  slideIndex++;
+  if (slideIndex > slides.length - 1) {
+    slideIndex = 0;
+  }
+
+  slides[slideIndex].classList.add("active");
+}
+
+setInterval(showSlides, 3000);
+showSlides();
+
+
+</script>
+</body>
+</html> 
