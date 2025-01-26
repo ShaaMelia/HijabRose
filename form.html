@@ -432,6 +432,8 @@ textarea {
         <label>Order Total:</label>
         <input type="text" id="orderTotal" name="orderTotal" readonly>
 
+        <div id="cart-items"></div>
+
         <button type="submit">Submit</button>
     </form>
 </div>
@@ -509,82 +511,76 @@ textarea {
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Retrieve the order description and total price from localStorage
-    let orderDescriptionFromStorage = localStorage.getItem('orderDescription');
+document.addEventListener('DOMContentLoaded', function () {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
     let totalPriceFromStorage = localStorage.getItem('totalPrice');
 
-    // Get the DOM elements
     const orderTextArea = document.querySelector('textarea[name="order"]');
     const orderTotalInput = document.getElementById("orderTotal");
 
-    // Set the order description (cart items)
-      orderTextArea.value = orderDescriptionFromStorage || 'No items in cart.';
-      orderTotalInput.value = totalPriceFromStorage || '0.00';
+    function displayCartDetails() {
+        let totalPrice = 0;
 
-   console.log("Cart Total Price: ", total.toFixed(2));
-   console.log("Setting orderTotal input: ", totalPriceFromStorage);
+        if (cartItems.length === 0) {
+            orderTextArea.value = "No items in cart.";
+            orderTotalInput.value = "RM 0.00";
+            return;
+        }
 
-       // Set the order total price
-   orderTotalInput.value = (parseFloat(totalPriceFromStorage) && !isNaN(parseFloat(totalPriceFromStorage))) ? parseFloat(totalPriceFromStorage).toFixed(2) : '0.00';
+        const orderSummary = cartItems.map(item => {
+            let itemTotal = (item.price * item.quantity).toFixed(2);
+            totalPrice += item.price * item.quantity;
+            return `${item.name} x${item.quantity} - RM ${itemTotal}`;
+        }).join("\n");
 
+        orderTextArea.value = orderSummary;
+        orderTotalInput.value = `RM ${totalPrice.toFixed(2)}`;
 
-    // Checkout form submission
-    document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+        localStorage.setItem('orderDescription', orderSummary);
+        localStorage.setItem('totalPrice', totalPrice.toFixed(2));
+    }
+
+    displayCartDetails();
+
+    document.getElementById("checkoutForm").addEventListener("submit", function (e) {
         e.preventDefault();
+ 
+   alert("Form submitted!"); 
 
-        // Form data
-        var formData = {
+  window.location.href = "Payment.html"; 
+  });
+
+        const formData = {
             firstName: document.getElementsByName("firstName")[0].value,
             lastName: document.getElementsByName("lastName")[0].value,
             mobileNo: document.getElementsByName("mobileNo")[0].value,
             email: document.getElementsByName("email")[0].value,
             address1: document.getElementsByName("address1")[0].value,
             address2: document.getElementsByName("address2")[0].value,
-            country: document.getElementsByName("country")[0].value,
-            state: document.getElementsByName("state")[0].value,
             city: document.getElementsByName("city")[0].value,
-            order: document.getElementsByName("order")[0].value,
-            orderTotal: document.getElementsByName("orderTotal")[0].value
+            state: document.getElementsByName("state")[0].value,
+            country: document.getElementsByName("country")[0].value,
+            orderDescription: orderTextArea.value,
+            orderTotal: orderTotalInput.value
         };
 
-        // Send data to the server
-        fetch("https://script.google.com/a/macros/student.uitm.edu.my/s/AKfycbz4Dy1C2soygo7ut5Vr4WNFX3FeCX2vjtVc0BvtJiZqc8UseZ_6B7GPVczUKgAJxQlO/exec", {  
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData)
-        }).then(response => {
-            alert("Order submitted successfully!");
-            window.location.href = "Payment.html"; // Redirect to Payment page
-            document.getElementById("checkoutForm").reset();
-        }).catch(error => console.error("Error!", error));
+        console.log("Form data submitted:", formData);
+        alert('Order Submitted!');
+
+        localStorage.removeItem('cartItems');
+        localStorage.removeItem('orderDescription');
+        localStorage.removeItem('totalPrice');
+
+        document.getElementById("checkoutForm").reset();
+        displayCartDetails(); 
     });
-
-
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-function updateCart() {
-    // Calculate the total price from cartItems
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    // Update the total price in the localStorage and the UI
-    localStorage.setItem('totalPrice', total.toFixed(2));
-    document.getElementById('total-price').innerText = total.toFixed(2);
-
-    // Update the cart count
-    document.getElementById('cart-count').innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
-    // If cart modal is open, refresh it
-    if (document.getElementById("cart-modal").style.display === "flex") {
-        openCartModal();
-    }
-}
+});
 
 function addToCart(productId, productName, productPrice) {
     productPrice = parseFloat(productPrice);
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-    // Check if the productPrice is a valid number
     if (isNaN(productPrice) || productPrice <= 0) {
         showToast("Invalid product price!");
         return;
@@ -599,60 +595,31 @@ function addToCart(productId, productName, productPrice) {
     }
 
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    updateTotalPrice();
     showToast(`${productName} has been added to your cart.`);
-    updateCart();
 }
 
-
 function deductItem(productName) {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const item = cartItems.find(item => item.name === productName);
-    if (item && item.quantity > 1) {
+
+    if (item) {
         item.quantity--;
-    } else {
-        // Remove the item if quantity is 1
-        cartItems = cartItems.filter(item => item.name !== productName);
+        if (item.quantity === 0) {
+            cartItems = cartItems.filter(item => item.name !== productName);
+        }
     }
 
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    updateCart();
+    updateTotalPrice();
 }
 
-function openCartModal() {
-    const cartOverlay = document.getElementById("cart-overlay");
-    const cartModal = document.getElementById("cart-modal");
-    const cartItemsContainer = document.getElementById("cart-items");
-    let updatedTotalPrice = 0;
-
-    cartItemsContainer.innerHTML = "";
-
-    cartItems.forEach(item => {
-        if (item.quantity > 0 && !isNaN(item.price) && item.price > 0) {
-            updatedTotalPrice += item.price * item.quantity;
-            const cartItemElement = document.createElement("div");
-            cartItemElement.classList.add("cart-item");
-            cartItemElement.innerHTML = `
-                <h3>${item.name}</h3>
-                <p class="quantity">Quantity: ${item.quantity}</p>
-                <p class="price">RM ${(item.price * item.quantity).toFixed(2)}</p>
-                <button class="deduct-button" onclick="deductItem('${item.name}')">-</button>
-            `;
-            cartItemsContainer.appendChild(cartItemElement);
-        } else {
-            // If the price is invalid, display a message
-            const cartItemElement = document.createElement("div");
-            cartItemElement.classList.add("cart-item");
-            cartItemElement.innerHTML = `
-                <h3>${item.name}</h3>
-                <p class="quantity">Quantity: ${item.quantity}</p>
-                <p class="price">RM 0.00</p>
-            `;
-            cartItemsContainer.appendChild(cartItemElement);
-        }
-    });
-
-    document.getElementById("total-price").innerText = updatedTotalPrice.toFixed(2);
-    cartModal.style.display = "flex";
-    cartOverlay.style.display = "block";
+function updateTotalPrice() {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    
+    localStorage.setItem('totalPrice', total.toFixed(2));
+    document.getElementById("orderTotal").value = `RM ${total.toFixed(2)}`;
 }
 
 function showToast(message) {
@@ -662,33 +629,6 @@ function showToast(message) {
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
 }
-
-function displayCartDetails() {
-    const orderTextArea = document.querySelector('textarea[name="order"]');
-    const orderTotalInput = document.getElementById("orderTotal");
-
-    // Set the order description (cart items) in the textarea
-    const orderSummary = cartItems.map(item => {
-        if (isNaN(item.price) || item.price <= 0) {
-            return `${item.name} x${item.quantity} - RM 0.00`; // Show a default price if it's invalid
-        }
-        return `${item.name} x${item.quantity} - RM ${(item.price * item.quantity).toFixed(2)}`;
-    }).join("\n");
-    orderTextArea.value = orderSummary || 'No items in cart.';
-
-    // Set the order total price in the input field
-    const totalPrice = localStorage.getItem('totalPrice') || '0.00';
-    orderTotalInput.value = totalPrice;
-}
-
-
-    // Update total price of cart
-    function updateTotalPrice() {
-        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        document.getElementById('total-price').innerText = total.toFixed(2);
-        localStorage.setItem('totalPrice', total.toFixed(2));  // Store the total price in localStorage
-    }
-});
 </script>
 </body>
 </html>
