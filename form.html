@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Form</title>
+    <title>Checkout Order</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <style>
 body {
     font-family: 'Playfair Display', serif;
-    background-color: #f9f9f9; 
+    background-color: #D16C7C; 
     margin: 0;
     padding-bottom: 0; 
     color: #333;
@@ -479,19 +479,22 @@ document.getElementById("checkoutForm").addEventListener("submit", function(e) {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    var orderDetails = localStorage.getItem("orderDetails");
+    let orderDetails = localStorage.getItem("orderDetails");
+    let orderTotal = localStorage.getItem("orderTotal");
+
     if (orderDetails) {
-        document.getElementsByName("order")[0].value = JSON.parse(orderDetails);
+        let parsedOrder = JSON.parse(orderDetails);
+        let orderSummary = parsedOrder.map(item => `${item.name} x${item.quantity} - RM ${(item.price * item.quantity).toFixed(2)}`).join("\n");
+
+        document.getElementsByName("order")[0].value = orderSummary;
+    }
+
+    if (orderTotal) {
+        document.getElementById("total-price").innerText = `RM ${parseFloat(orderTotal).toFixed(2)}`;
     }
 });
 
-    
-function loadTotalOrder() {
-        let totalAmount = localStorage.getItem("orderTotal") || "0";
-        document.getElementById("orderTotal").value = `RM ${parseFloat(totalAmount).toFixed(2)}`;
-    }
 
-    // Run function when page loads
     window.onload = loadTotalOrder;
 
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -615,7 +618,7 @@ function loadTotalOrder() {
   }
   
   function showProductDetail(productId) {
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 1; i <= 40; i++) {
       document.getElementById('product-detail-' + i).style.display = 'none';
     }
   
@@ -623,7 +626,7 @@ function loadTotalOrder() {
   }
   
   function goBack() {
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 1; i <= 40; i++) {
       document.getElementById('product-detail-' + i).style.display = 'none';
     }
     window.scrollTo(0, 0);
